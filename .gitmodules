@@ -32,3 +32,8 @@
 	path = OCA/community-data-files
 	url = git@github.com:OCA/community-data-files.git
 	branch = 14.0
+
+[submodule "OCA/credit-control"]
+	path = OCA/credit-control
+	url = git@github.com:OCA/credit-control.git
+	branch = 14.0
