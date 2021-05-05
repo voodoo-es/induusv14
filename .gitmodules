@@ -42,3 +42,8 @@
 	path = OCA/e-commerce
 	url = git@github.com:OCA/e-commerce.git
 	branch = 14.0
+
+[submodule "OCA/knowledge"]
+	path = OCA/knowledge
+	url = git@github.com:OCA/knowledge.git
+	branch = 14.0
