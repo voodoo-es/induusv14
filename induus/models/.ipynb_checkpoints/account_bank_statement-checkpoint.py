@@ -28,5 +28,3 @@ class AccountBankStatement(models.Model):
                     if line_name.find(nombre_contacto) > -1:
                         line.write({'partner_id': contacto.id})
                         break
-    
-    

@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class AccountAnalytic(models.Model):
     _inherit = 'account.analytic.account'
 
-    invoice_id = fields.Many2one('account.invoice', string="Factura", compute="_compute_invoice", store=True)
+    invoice_id = fields.Many2one('account.move', string="Factura", compute="_compute_invoice", store=True)
     invoice_date_invoice = fields.Date('Fecha factura', compute="_compute_invoice", store=True)
     invoice_number = fields.Char('Número', compute="_compute_invoice", store=True)
     invoice_name = fields.Char('Referencia/Descripción', compute="_compute_invoice", store=True)
@@ -62,7 +62,7 @@ class AccountAnalytic(models.Model):
             }
 
             if r.code:
-                invoice_lines = self.env['account.invoice.line'].search([
+                invoice_lines = self.env['account.move.line'].search([
                     ('account_analytic_id', '=', r.id),
                     ('invoice_id.type', 'in', ['out_invoice', 'out_refund'])
                 ])
@@ -118,7 +118,7 @@ class AccountAnalytic(models.Model):
                         self.env.ref("induus.menu_account_analytic_account_hojas_margenes_tree").id
                     )
 
-                    account_invoice_url = "/web?#action=%s&id=%s&model=account.invoice&view_type=form&menu_id=%s" % (
+                    account_invoice_url = "/web?#action=%s&id=%s&model=account.move&view_type=form&menu_id=%s" % (
                         self.env.ref("account.action_invoice_tree1").id,
                         invoice.id,
                         self.env.ref("account.menu_action_invoice_tree1").id
@@ -146,7 +146,7 @@ class AccountAnalyticLine(models.Model):
     order_confirmation_date = fields.Datetime('Fecha Pedido', compute="_compute_order", store=True)
     order_partner_id = fields.Many2one('res.partner', string="Cliente Pedido", compute="_compute_order", store=True)
     order_client_order_ref = fields.Char('Referencia Pedido', compute="_compute_order", store=True)
-    invoice_id = fields.Many2one('account.invoice', string="Factura", compute="_compute_order", store=True)
+    invoice_id = fields.Many2one('account.move', string="Factura", compute="_compute_order", store=True)
     invoice_date_invoice = fields.Date('Fecha Factura', compute="_compute_order", store=True)
     invoice_number = fields.Char('Número Factura', compute="_compute_order", store=True)
     invoice_amount_total = fields.Monetary('Total Factura', compute="_compute_order", store=True)
@@ -175,7 +175,7 @@ class AccountAnalyticLine(models.Model):
                         'order_client_order_ref': order.client_order_ref,
                     })
 
-                invoice = self.env['account.invoice'].search([('origin', '=', r.account_id.code)], limit=1)
+                invoice = self.env['account.move'].search([('origin', '=', r.account_id.code)], limit=1)
                 if invoice:
                     values_order.update({
                         'invoice_id': invoice.id,
@@ -224,14 +224,14 @@ class AccountAnalyticLine(models.Model):
             res.account_id._compute_invoice()
         return res
 
-    @api.multi
+#     @api.multi
     def write(self, vals):
         res = super(AccountAnalyticLine, self).write(vals)
         if 'amount' in vals:
             self.mapped('account_id')._compute_invoice()
         return res
 
-    @api.multi
+#     @api.multi
     def unlink(self):
         accounts = self.mapped('account_id')
         res = super(AccountAnalyticLine, self).unlink()
