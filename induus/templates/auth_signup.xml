@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="fields" inherit_id="auth_signup.fields">
+        <xpath expr="//div[hasclass('field-name')]" position="after">
+            <div class="form-group field-country_id">
+                <label for="country_id">País</label>
+                <select class="form-control form-control-sm" required="required" id="country_id" name="country_id">
+                    <option value="">Seleccione</option>
+                    <t t-set="countries" t-value="request.env['res.country'].search([])"/>
+                    <t t-foreach="countries" t-as="country">
+                        <option t-att-value="country.id"><t t-esc="country.name"/></option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </template>
+</odoo>

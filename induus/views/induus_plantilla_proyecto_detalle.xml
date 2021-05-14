@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="induus_plantilla_proyecto_form" model="ir.ui.view">
+        <field name="name">induus.plantilla_proyecto.form</field>
+        <field name="model">induus.plantilla_proyecto</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="proyecto_detalle_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="unidades"/>
+                                <button name="mostrar_lineas"
+                                        type="object"
+                                        icon="fa-external-link"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="induus_plantilla_proyecto_detalle_short_lineas_form" model="ir.ui.view">
+        <field name="name">induus.plantilla_proyecto_detalle.form</field>
+        <field name="model">induus.plantilla_proyecto_detalle</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="unidades"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="linea_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="product_ref"/>
+                                <field name="partner_id"/>
+                                <field name="descripcion"/>
+                                <field name="unidades" sum="Total"/>
+                                <field name="cantidad_producto"/>
+                                <field name="cantidad_prevista"/>
+                                <field name="pvp" sum="Total"/>
+                                <field name="coste" sum="Total"/>
+                                <field name="subtotal"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="beneficio"/>
+                                <field name="beneficio_porcentaje"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="induus_plantilla_proyecto_detalle_action"
+                name="Plantillas proyectos"
+                res_model="induus.plantilla_proyecto"
+                view_mode="tree,form"/>
+
+    <menuitem id="menu_induus_plantilla_proyecto_detalle"
+              action="induus_plantilla_proyecto_detalle_action"
+              parent="sale.menu_sale_config"
+              sequence="50"/>
+</odoo>

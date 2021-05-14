@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="name">crm.lead.form.opportunity.induus</field>
+        <field name="model">crm.lead</field>
+        <field ref="crm.crm_lead_view_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="context">{'search_default_customer': 1, 'default_name': partner_name, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website,'show_vat': True, 'default_validar_campos': False}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="zona_id" attrs="{'invisible': [('partner_id', '=', False)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="empresa"/>
+            </xpath>
+
+            <xpath expr="//field[@name='medium_id']" position="after">
+                <field name="cntc_newletter" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_crm_case_opportunities_filter" model="ir.ui.view">
+        <field name="name">crm.lead.search.opportunity.induus</field>
+        <field name="model">crm.lead</field>
+        <field ref="crm.view_crm_case_opportunities_filter" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="zona_id"/>
+            </xpath>
+
+            <xpath expr="//group[1]/filter[@name='city']" position="before">
+                <filter name="group_zona_id" string="Zona" context="{'group_by': 'zona_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="induus_importar_envio_form" model="ir.ui.view">
+        <field name="name">induus.importar_envio.form</field>
+        <field name="model">induus.importar_envio</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="fecha_inicio"/>
+                        </group>
+                        <group>
+                            <field name="fecha_fin"/>
+                        </group>
+                    </group>
+                    <group>
+                        <button type="object"
+                                name="buscar_envios"
+                                class="oe_highlight"
+                                string="Buscar envíos"/>
+                    </group>
+
+                    <group string="Envíos">
+                        <field name="envio_ids" nolabel="1" default_focus="1" readonly="1">
+                            <tree decoration-danger="existe or not codigo_envio">
+                                <field name="codigo_envio" readonly="1"/>
+                                <field name="codigo_transaccion" readonly="1"/>
+                                <field name="concepto" readonly="1"/>
+                                <field name="fecha_hora_creacion" readonly="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="importe" readonly="1"/>
+                                <field name="existe" invisible="1"/>
+                                <field name="tipo_envio" readonly="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="importar_envios" string="Importar" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

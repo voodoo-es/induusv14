@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payments_tree" model="ir.ui.view">
+        <field name="name">account_due_list.view_payments_tree.induus</field>
+        <field name="model">account.move.line</field>
+        <field ref="account_due_list.view_payments_tree" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='credit']" position="after">
+                <field name="balance" sum="Total Balance"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

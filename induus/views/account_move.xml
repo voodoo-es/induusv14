@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">account.move.form.induus</field>
+        <field name="model">account.move</field>
+        <field ref="account.view_move_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="origin_account_analytic_id" invisible="1"/>
+                <button name="action_account_analytic"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-usd"
+                        string="Coste/Beneficio"
+                        attrs="{'invisible': [('origin_account_analytic_id', '=', False)]}"/>
+                <button name="action_view_sale_order_from_invoice"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-usd"
+                        attrs="{'invisible': [('sale_order_count', '=', 0)]}">
+                    <field name="sale_order_count" widget="statinfo" string="Ventas"/>
+                </button>
+                <button name="action_view_purchase_order_from_invoice"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-shopping-cart"
+                        attrs="{'invisible': [('purchase_order_count', '=', 0)]}">
+                    <field name="purchase_order_count" widget="statinfo" string="Compras"/>
+                </button>
+
+                <button name="action_stock_picking_from_invoice"
+                        type="object"
+                        class="oe_stat_button"
+                        attrs="{'invisible': [('stock_picking_count', '=', 0)]}"
+                        icon="fa-truck">
+                    <field string="Albaranes"
+                           name="stock_picking_count"
+                           widget="statinfo"/>
+                </button>
+            </xpath>
+
+<!--             <xpath expr="//span[hasclass('o_form_label')][1]" position="replace">
+                <span class="o_form_label" attrs="{'invisible': ['|',('state','=','draft'), ('type','!=','out_refund')]}">Nota de crédito cliente</span>
+            </xpath> -->
+
+<!--             <xpath expr="//span[hasclass('o_form_label')][1]" position="after">
+                <span class="o_form_label" attrs="{'invisible': ['|',('state', '=', 'draft'), ('type','!=','out_invoice')]}">Factura de cliente </span>
+            </xpath> -->
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree[1]/field[@name='name']" position="after">
+                <field name="referencia_cliente"/>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_date']" position="before">
+                <field name="enviada_auto"/>
+            </xpath>
+
+            <xpath expr="//group[1]/group[1]" position="inside">
+                <field name="name"/>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_residual']" position="after">
+                <field name="margen_analitico"/>
+                <field name="margen_analitico_porcentaje"/>
+<!--                 <field name="margin" string="Beneficio"/> -->
+                <field name="margin_porcentaje"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--     <record id="view_move_tree_induus" model="ir.ui.view">
+        <field name="name">account.view.move.tree.induus</field>
+        <field name="model">account.move</field>
+        <field ref="account.view_move_tree" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total_signed']" position="after">
+                <field name="margen_analitico" sum="Margen analítico"/>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_residual_signed']" position="after">
+                <field name="amount_total_signed" sum="Total"/>
+                <field name="margin_percent"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='invoice_date_due']" position="after">
+                <field name="date_payment"/>
+                <field name="num_dias_cobro"/>
+            </xpath>
+        </field>
+    </record> -->
+
+<!--     <record id="view_account_invoice_tree" model="ir.ui.view">
+        <field name="name">account.move tree.induus2</field>
+        <field name="model">account.move</field>
+        <field ref="account_invoice_margin.view_account_invoice_tree" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='margin_signed']" position="replace"/>
+            <xpath expr="//field[@name='margin_percent']" position="replace"/>
+        </field>
+    </record> -->
+
+<!--     <record id="view_account_invoice_filter" model="ir.ui.view">
+        <field name="name">account.move.select.induus</field>
+        <field name="model">account.move</field>
+        <field ref="account.view_account_invoice_filter" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='number']" position="after">
+                <field name="name"/>
+                <field name="invoice_line_ids"
+                       string="Producto"
+                       filter_domain="[('invoice_line_ids.product_id', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record> -->
+
+<!--     <record id="invoice_margin_form_tree" model="ir.ui.view">
+        <field name="name">account.move form.margen.induus</field>
+        <field name="model">account.move</field>
+        <field ref="account_invoice_margin.invoice_margin_form_tree" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='margin_percent'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='margin_percent'][1]" position="after">
+                <field name="margin_porcentaje"/>
+            </xpath>
+
+            <xpath expr="//group[hasclass('oe_subtotal_footer')]/field[@name='margin'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//group[hasclass('oe_subtotal_footer')]/field[@name='margin_percent'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="action_desfase" model="ir.actions.server">
+        <field name="name">Desfase</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = env['sale.order'].action_desfase()</field>
+    </record>
+
+<!--     <record id="action_purchase_order_line_pc_tree" model="ir.actions.act_window">
+        <field name="name">Abonos</field>
+        <field name="res_model">purchase.order.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('cantidades_facturadas_mayor_que_recibida', '=', True),('date_order','>','07/18/2019')]</field>
+        <field name="view_id" ref="purchase_order_line_tree_pc"/>
+    </record> -->
+
+<!--     <menuitem action="action_desfase"
+              id="menu_invoice_desfase_tree"
+              name="Desfase"
+              parent="account_accountant.menu_accounting"
+              groups="account.group_account_user"
+              sequence="6"/> -->
+
+<!--     <menuitem action="action_purchase_order_line_pc_tree"
+              id="menu_purchase_order_line_pc_tree"
+              name="Abonos"
+              parent="stock.menu_stock_root"
+              groups="account.group_account_user"
+              sequence="9"/> -->
+</odoo>
