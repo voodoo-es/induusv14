@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document" priority="99">
+        <xpath expr="//table[1]" position="attributes">
+            <attribute name="class" add="table-center o_bg_gris" separator=" "/>
+        </xpath>
+
+        <xpath expr="//t[@t-set='address'][1]" position="replace">
+            <t t-set="address">
+                <div>
+                    <strong>Cliente:</strong> <br/>
+                    <span t-esc="partner"
+                          t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True}"/>
+                </div>
+            </t>
+        </xpath>
+        
+        <xpath expr="//table[1]/thead/tr/th[1]" position="after">
+            <th t-if="o.picking_type_id.code == 'outgoing'">
+                <span>Referencia cliente</span>
+            </th>
+        </xpath>
+
+        <xpath expr="//table[1]/tbody/tr/td[1]" position="after">
+            <td t-if="o.picking_type_id.code == 'outgoing'">
+                <span t-field="o.sudo().sale_id.client_order_ref"/>
+            </td>
+        </xpath>
+
+        <xpath expr="//span[@t-field='o.date_done']" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
+        </xpath>
+        
+        <xpath expr="//span[@t-field='o.scheduled_date']" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
+        </xpath>
+        
+        <xpath expr="//table[1]/thead[1]/tr[1]" position="inside">
+            <t t-if="o.gene_envio_ids" 
+               t-set="nombres_agencias" 
+               t-value="', '.join([e.name_agencia for e in o.gene_envio_ids if e.name_agencia])"/>
+            <t t-if="o.gene_envio_ids" 
+               t-set="codigos_seguimiento" 
+               t-value="', '.join([e.codigo_seguimiento for e in o.gene_envio_ids if e.codigo_seguimiento])"/>
+            <th t-if="nombres_agencias" class="text-center"><strong>Agencia</strong></th>
+            <th t-if="codigos_seguimiento" class="text-center"><strong>Tracking</strong></th>
+        </xpath>
+
+        <xpath expr="//table[1]/tbody[1]/tr[1]" position="inside">
+            <td t-if="nombres_agencias" class="text-center bg-white" style="color:inherit;">
+                <t t-esc="nombres_agencias" />
+            </td>
+            <td t-if="codigos_seguimiento" class="text-center bg-white" style="color:inherit;">
+                <t t-esc="codigos_seguimiento" />
+            </td>
+        </xpath>
+        
+        <xpath expr="//table[2]" position="replace">
+            <table class="table table-sm mt48 table-center o_bg_gris">
+                <thead>
+                    <tr>
+                        <th class="text-center"><strong>Pos.</strong></th>
+                        <th><strong><t t-if="o.picking_type_id.code == 'outgoing'">R. Cliente</t><t t-if="o.picking_type_id.code == 'incoming'">R. Proveedor</t>/Descripción</strong></th>
+                        <th  t-if="o.picking_type_id.code == 'outgoing'"><strong>Cantidad Pedida</strong></th>
+                        <th><strong>Cantidad Entregada</strong></th>
+                        <th><strong>Código/Peso</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                    <tr t-foreach="lines" t-as="move">
+                        <td class="text-center" style="background-color:#e9ecef;"><t t-esc="move_index + 1"/></td>
+                        <td>
+                            <t t-set="ref" t-value="'999999999999'"/>
+                            <t t-if="o.picking_type_id.code == 'outgoing'">
+                                <t t-set="ref_cliente" t-value="''"/>
+                                <t t-if="o.sale_id and o.sale_id.mostrar_ref_cliente">
+                                    <t t-set="ref_cliente" t-value="move.sale_line_id.referencia_cliente"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="o.partner_id">
+                                        <t t-set="ref_cliente" t-value="move.product_id.product_tmpl_id.referencia_cliente(o.partner_id)"/>
+                                    </t>
+                                    <t t-if="not ref_cliente">
+                                        <t t-set="ref_cliente" t-value="move.product_id.default_code"/>
+                                    </t>
+                                </t>
+                                <strong><t t-esc="ref_cliente"/></strong> <br/>
+                                <t t-set="ref" t-value="ref_cliente"/>
+                            </t>
+                            
+                            <t t-if="o.picking_type_id.code == 'incoming'">
+                                <t t-set="ref" t-value="move.ref_proveedor"/>
+                                <strong><t t-esc="move.ref_proveedor"/></strong> <br/>
+                            </t>
+                            
+                            <t t-if="o.picking_type_code == 'outgoing'">
+                                <t t-if="move.product_id.name" t-esc="move.product_id.name.replace('[%s]' % ref, '')"/>
+                                <t t-if="move.product_id.sudo().description_pickingout" t-esc="move.product_id.sudo().description_pickingout.replace('[%s]' % ref, '')"/>
+                            </t>
+                            <t t-if="o.picking_type_code == 'incoming'">
+                                <t t-if="move.product_id.name" t-esc="move.product_id.name.replace('[%s]' % ref, '')"/>
+                                <t t-if="move.product_id.sudo().description_pickingin" t-esc="move.product_id.sudo().description_pickingin.replace('[%s]' % ref, '')"/>
+                            </t>
+                            <t t-if="o.picking_type_code != 'incoming' and o.picking_type_code != 'outgoing'">
+                                <t t-if="move.product_id.display_name" t-esc="move.product_id.display_name.replace('[%s]' % ref, '')"/>
+                            </t>
+                        </td>
+                        <td  t-if="o.picking_type_id.code == 'outgoing'">
+                            <span t-field="move.quantity_done"/>
+                            <span t-field="move.unidad_pedido_venta"/>
+                        </td>
+                        <td>
+                            <span t-field="move.quantity_done"/>
+                            <span t-field="move.product_uom"/>
+                        </td>
+                        <td class="bg-white" style="color:inherit;">
+                            <span t-field="move.product_id.intrastat_id.code"/> / <span t-field="move.product_id.weight"/> kg
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+
+        <xpath expr="//table[3]" position="replace"/>
+
+        <xpath expr="//table[1]/thead[1]/tr[1]/th[6]" position="replace"/>
+        <xpath expr="//table[1]/tbody[1]/tr[1]/td[6]" position="replace"/>
+    </template>
+
+    <template id="report_delivery_document_inherit_sale_stock" inherit_id="sale_stock.report_delivery_document_inherit_sale_stock">
+        <xpath expr="//div/div" position="replace"/>
+    </template>
+
+    <template id="report_picking" inherit_id="stock.report_picking">
+        <xpath expr="//table[1]/thead[1]/tr[1]" position="inside">
+            <t t-if="o.gene_envio_ids" 
+               t-set="nombres_agencias" 
+               t-value="', '.join([e.name_agencia for e in o.gene_envio_ids if e.name_agencia])"/>
+            <t t-if="o.gene_envio_ids" 
+               t-set="codigos_seguimiento" 
+               t-value="', '.join([e.codigo_seguimiento for e in o.gene_envio_ids if e.codigo_seguimiento])"/>
+            <th t-if="nombres_agencias" class="text-center"><strong>Agencia</strong></th>
+            <th t-if="codigos_seguimiento" class="text-center"><strong>Tracking</strong></th>
+        </xpath>
+        
+        <xpath expr="//table[1]/tbody[1]/tr[1]" position="inside">
+            <td t-if="nombres_agencias" class="text-center bg-white">
+                <t t-esc="nombres_agencias" />
+            </td>
+            <td t-if="codigos_seguimiento" class="text-center bg-white">
+                <t t-esc="codigos_seguimiento" />
+            </td>
+        </xpath>
+        
+        <xpath expr="//table[1]" position="attributes">
+            <attribute name="class" add="table-center o_bg_gris" separator=" "/>
+        </xpath>
+
+        <xpath expr="//table[2]" position="attributes">
+            <attribute name="class" add="table-center o_bg_gris" separator=" "/>
+        </xpath>
+
+        <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="after">
+            <th t-if="o.picking_type_id.code == 'outgoing'"><strong>Código/Peso</strong></th>
+        </xpath>
+
+        <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="replace">
+            <th><strong><t t-if="o.picking_type_id.code == 'outgoing'">R. Cliente</t><t t-if="o.picking_type_id.code == 'incoming'">R. Proveedor</t>/Descripción</strong></th>
+        </xpath>
+        
+        <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="before">
+            <th class="text-center">Pos.</th>
+        </xpath>
+
+        
+        <xpath expr="//table[2]/tbody[1]//tr[1]/td[1]" position="replace">
+            <td>
+                <t t-if="o.picking_type_id.code == 'outgoing'">
+                    <t t-set="ref_cliente" t-value="''"/>
+                    <t t-if="o.sale_id and o.sale_id.mostrar_ref_cliente">
+                        <t t-set="ref_cliente" t-value="ml.move_id.sale_line_id.referencia_cliente"/>
+                    </t>
+                    <t t-else="">
+                        <t t-if="o.partner_id">
+                            <t t-set="ref_cliente" t-value="ml.product_id.product_tmpl_id.referencia_cliente(o.partner_id)"/>
+                        </t>
+                        <t t-if="not ref_cliente">
+                            <t t-set="ref_cliente" t-value="ml.product_id.default_code"/>
+                        </t>
+                    </t>
+                    <strong><t t-esc="ref_cliente"/></strong> <br/>
+                </t>
+                <t t-if="o.picking_type_id.code == 'incoming'">
+                    <strong><t t-esc="move.ref_proveedor"/></strong> <br/>
+                </t>
+                <pre t-raw='ml.product_id.display_name.replace("[%s]" % ml.product_id.default_code, "").replace("[%s]" % ml.move_id.ref_cliente, "").replace("[%s]" % ml.move_id.ref_proveedor, "").strip()'
+                style="font-family:inherit;font-size:inherit;color:inherit;margin-bottom:0;"/>
+                <span t-field="ml.product_id.description_picking"/>
+            </td>
+        </xpath>
+        
+        <xpath expr="//table[2]/tbody[1]//tr[1]/td[1]" position="after">
+            <td t-if="o.picking_type_id.code == 'outgoing'">
+                <span t-field="move.product_id.intrastat_id.code"/> / <span t-field="move.product_id.weight"/> kg
+            </td>
+        </xpath>
+        
+        <xpath expr="//table[2]/tbody[1]//tr[1]/td[1]" position="before">
+            <td style="background-color:#e9ecef;"><t t-esc="ml_index + 1"/></td>
+        </xpath>
+    </template>
+
+    <template id="label_transfer_template_view" inherit_id="stock_zebra.label_transfer_template_view">
+        <xpath expr="//t[@t-as='move_line']/t[1]" position="replace">
+            <t t-if="int(move_line.qty_done)&gt;0 and move_line.move_id.imprimir_etiqueta">
+              <t t-if="picking.sale_id">
+                  <t t-if="move_line.product_id.imprimir_etiqueta_por_cantidad">
+                      <t t-set="qty" t-value="1"/>
+                  </t>
+                  <t t-else="">
+                      <t t-set="qty" t-value="int(move_line.qty_done)"/>
+                  </t>
+              </t>
+              <t t-else="">
+                  <t t-set="qty" t-value="int(move_line.qty_done)"/>
+              </t>
+            </t>
+        </xpath>
+        <xpath expr="//t[@t-as='move_line']/t[2]" position="replace">
+            <t t-else="">
+                <t t-set="qty" t-value="0"/>
+            </t>
+      </xpath>
+        <xpath expr="//t[@t-translation='off'][1]" position="replace">
+            <t t-translation="off">
+^XA
+^CI28
+^FO170,30
+^XGE:INDUUS.GRF^FS
+^FO25,140
+^A0N,44,33,E:ARI001.FNT^A0N,50,50^FD<t t-if="move_line.move_id.sale_line_id and move_line.move_id.sale_line_id.referencia_cliente" t-esc="move_line.move_id.sale_line_id.referencia_cliente"/><t t-if="not move_line.move_id.sale_line_id.referencia_cliente and move_line.move_id.ref_cliente" t-raw="move_line.move_id.ref_cliente"/>^FS
+^FO24,140
+^A0N,44,33,E:ARI001.FNT^A0N,50,50^FD<t t-if="move_line.move_id.sale_line_id and move_line.move_id.sale_line_id.referencia_cliente" t-esc="move_line.move_id.sale_line_id.referencia_cliente"/><t t-if="not move_line.move_id.sale_line_id.referencia_cliente and move_line.move_id.ref_cliente" t-raw="move_line.move_id.ref_cliente"/>^FS
+^FO25,141
+^A0N,44,33,E:ARI001.FNT^A0N,50,50^FD<t t-if="move_line.move_id.sale_line_id and move_line.move_id.sale_line_id.referencia_cliente" t-esc="move_line.move_id.sale_line_id.referencia_cliente"/><t t-if="not move_line.move_id.sale_line_id.referencia_cliente and move_line.move_id.ref_cliente" t-raw="move_line.move_id.ref_cliente"/>^FS
+^FB620,4,0,L^FO25,190
+^A0N,44,33,E:ARI000.FNT^FD<t t-raw="move_line.product_id.name[:57] + (move_line.product_id.name[57:] and '...')"/>^FS
+^FO25,280
+^A0N,44,33,E:ARI001.FNT^A0N,25,25^FDREF. CLIENTE:^FS
+^FO24,280
+^A0N,44,33,E:ARI001.FNT^A0N,25,25^FDREF. CLIENTE:^FS
+^FO25,281
+^A0N,44,33,E:ARI001.FNT^A0N,25,25^FDREF. CLIENTE:^FS
+^FO175,280
+^A0N,44,33,E:ARI000.FNT^A0N,25,25^FD<t t-if="picking.ref_cliente_sale_order" t-raw="picking.ref_cliente_sale_order"/><t t-if="not picking.ref_cliente_sale_order" t-raw="move_line.product_id.default_code"/>^FS
+<t t-if="move_line.picking_id.partner_id.parent_id != 'none'">
+^FO25,310
+^A0N,44,33,E:ARI000.FNT^A0N,25,25^FD<t t-raw="move_line.picking_id.partner_id.parent_id.name"/>^FS
+</t>
+<t t-else="">
+^FO25,310
+^A0N,44,33,E:ARI000.FNT^A0N,25,25^FD<t t-raw="move_line.picking_id.partner_id.name"/>^FS
+</t>
+^FO25,360
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD<t t-esc="move_line.date" t-options="{'widget': 'date', 'format': 'dd/MM/yyyy'}"/>^FS
+<t t-if="move_line.product_id.imprimir_etiqueta_por_cantidad">
+^FO485,360
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD<t t-esc="int(move_line.qty_done)"/> <t t-raw="move_line.product_uom_id.name"/>^FS
+^FO484,360
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD<t t-esc="int(move_line.qty_done)"/> <t t-raw="move_line.product_uom_id.name"/>^FS
+^FO485,361
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD<t t-esc="int(move_line.qty_done)"/> <t t-raw="move_line.product_uom_id.name"/>^FS
+^XZ
+</t>
+<t t-else="">
+^FO485,360
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD1 <t t-raw="move_line.product_uom_id.name"/>^FS
+^FO484,360
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD1 <t t-raw="move_line.product_uom_id.name"/>^FS
+^FO485,361
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD1 <t t-raw="move_line.product_uom_id.name"/>^FS
+^XZ
+</t>
+          </t>
+        </xpath>
+    </template>
+</odoo>

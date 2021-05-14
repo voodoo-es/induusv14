@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="invoice_supplier_form" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.form.induus</field>
+        <field name="model">account.move</field>
+        <field ref="account.view_move_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[1]" position="before">
+                <button name="action_importar_envios_genei"
+                        type="object"
+                        class="oe_stat_button"
+                        string="Buscar envíos"
+                        icon="fa-download"/>
+            </xpath>
+
+<!--             <xpath expr="//span[hasclass('o_form_label')][1]" position="replace">
+                <span class="o_form_label" attrs="{'invisible': ['|',('state','!=','draft'), ('type','!=','in_invoice')]}">Borrador Factura de proveedor</span>
+            </xpath> -->
+
+<!--             <xpath expr="//span[hasclass('o_form_label')][2]" position="replace">
+                <span class="o_form_label" attrs="{'invisible': [('sequence_number_next_prefix','=',False)]}">- Primer número:</span>
+            </xpath>
+ -->
+<!--             <xpath expr="//span[hasclass('o_form_label')][3]" position="replace">
+                <span class="o_form_label" attrs="{'invisible': ['|',('state','!=','draft'), ('type','!=','in_refund')]}">Borrador factura cliente</span>
+            </xpath> -->
+
+<!--             <xpath expr="//span[hasclass('o_form_label')][4]" position="replace">
+                <span class="o_form_label" attrs="{'invisible': ['|',('state', '=', 'draft'), ('type','!=','in_invoice')]}">Factura de proveedor </span>
+            </xpath> -->
+
+<!--             <xpath expr="//span[hasclass('o_form_label')][5]" position="replace">
+                <span class="o_form_label" attrs="{'invisible': ['|',('state', '=', 'draft'), ('type','!=','in_refund')]}">Nota de crédito proveedor </span>
+            </xpath> -->
+
+            <xpath expr="//sheet[1]/div[1]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_sale_order_from_invoice"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-usd"
+                            attrs="{'invisible': [('sale_order_count', '=', 0)]}">
+                        <field name="sale_order_count" widget="statinfo" string="Ventas"/>
+                    </button>
+
+                    <button name="action_view_purchase_order_from_invoice"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-cart-plus"
+                            attrs="{'invisible': [('purchase_order_count', '=', 0)]}">
+                        <field name="purchase_order_count" widget="statinfo" string="Compras"/>
+                    </button>
+
+                    <button name="action_stock_picking_from_invoice"
+                            type="object"
+                            class="oe_stat_button"
+                            attrs="{'invisible': [('stock_picking_count', '=', 0)]}"
+                            icon="fa-truck">
+                        <field string="Albaranes"
+                               name="stock_picking_count"
+                               widget="statinfo"/>
+                    </button>
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='ref']" position="attributes">
+                <attribute name="attrs">{'required':[('extract_can_show_resend_button', '!=', False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_date']" position="attributes">
+                <attribute name="attrs">{'required':[('extract_can_show_resend_button', '!=', False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_origin']" position="after">
+                <field name="origin_account_analytic_id" attrs="{'invisible': [('invoice_origin', '=', False)]}" readonly="1"/>
+            </xpath>
+
+<!--             <xpath expr="//field[@name='invoice_line_ids']" position="attributes">
+                <attribute name="context">{'type': type, 'journal_id': journal_id, 'default_account_analytic_id': origin_account_analytic_id}</attribute>
+            </xpath> -->
+        </field>
+    </record>
+
+<!--     <record id="view_move_tree_induus" model="ir.ui.view">
+        <field name="name">view.move.tree.induus</field>
+        <field name="model">account.invoice</field>
+        <field ref="account.view_move_tree" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='vendor_display_name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record> -->
+
+<!--     <record id="view_invoice_supplier_purchase_form" model="ir.ui.view">
+        <field name="name">ccount.invoice.supplier.purchase.induus</field>
+        <field name="model">account.invoice</field>
+        <field ref="purchase.view_invoice_supplier_purchase_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vendor_bill_purchase_id']" position="before">
+                <field name="partner_valids_ids" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='vendor_bill_purchase_id']" position="attributes">
+                <attribute name="domain">[('partner_id','child_of',partner_valids_ids)]</attribute>
+            </xpath>
+        </field>
+    </record> -->
+</odoo>
+
+

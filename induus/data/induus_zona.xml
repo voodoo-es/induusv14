@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="induus.zona" id="induus_zona_web">
+        <field name="name">ZONA WEB</field>
+    </record>
+</odoo>

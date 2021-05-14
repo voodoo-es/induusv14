@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_supplierinfo_form_view" model="ir.ui.view">
+        <field name="name">product.supplierinfo.form.view.induus</field>
+        <field name="model">product.supplierinfo</field>
+        <field ref="product.product_supplierinfo_form_view" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='min_qty']" position="before">
+                <field name="multiplo"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_supplierinfo_tree_view" model="ir.ui.view">
+        <field name="name">product.supplierinfo.tree.view.induus</field>
+        <field name="model">product.supplierinfo</field>
+        <field ref="product.product_supplierinfo_tree_view" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='min_qty']" position="before">
+                <field name="multiplo"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

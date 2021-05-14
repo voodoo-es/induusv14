@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document" inherit_id="account.report_invoice_document" priority="25">
+        <xpath expr="//div[@t-field='o.partner_id']" position="before">
+            <strong>Cliente:</strong>
+        </xpath>
+
+        <xpath expr="//div[@name='invoice_date']" position="replace"/>
+        <xpath expr="//div[@name='origin']" position="replace"/>
+        <xpath expr="//div[@name='description']" position="before">
+            <div class="col-auto mw-100 mb-2" t-if="o.date_invoice" name="invoice_date">
+                <strong><t t-if="o.type in ['out_refund']">Fecha abono</t><t t-else="">Invoice Date</t>:</strong>
+                <p class="m-0" t-field="o.date_invoice"/>
+            </div>
+            
+            <div class="col-auto mw-100 mb-2" t-if="o.origin" name="origin">
+                <strong>Source:</strong>
+                <p class="m-0" t-field="o.origin"/>
+            </div>
+            
+            <t t-set="invoice_date_in_out_refund" t-value="''"/>
+            <t t-if="o.type == 'out_refund'" t-set="invoice_date_in_out_refund" t-value="o.get_invoice_date_from_out_out_refund()"/>
+            <div t-if="invoice_date_in_out_refund" class="col-auto mw-100 mb-2" name="invoice_date_in_out_refund">
+                <strong>Fecha factura:</strong>
+                <p class="m-0" t-esc="invoice_date_in_out_refund"/>
+            </div>
+            
+            <div t-if="o.type == 'out_refund' and o.name" class="col-auto mw-100 mb-2" name="ref_desc">
+                <strong>Referencia/Descripción:</strong>
+                <p class="m-0" t-esc="o.name"/>
+            </div>
+        </xpath>
+        
+        <xpath expr="//div[@name='description']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        
+        <xpath expr="//div[@name='reference']/p[1]" position="replace">
+            <p class="m-0" t-esc="o.name"/>
+        </xpath>
+        
+        <xpath expr="//p[@t-if='o.reference']" position="replace">
+            <div id="qrcode" t-if="(o.partner_id.country_id.code in ['BE', 'AT', 'DE', 'FI', 'NL']) and (o.company_id.qr_code) and (o.currency_id.name == 'EUR') and (o.partner_bank_id.acc_number != False)">
+                <p t-if="(o.partner_bank_id.qr_code_valid)">
+                    <strong class="text-center">Scan me with your banking app.</strong><br/><br/>
+                    <img class="border border-dark rounded" t-att-src="o.partner_bank_id.build_qr_code_url(o.residual,(o.reference) if (o.reference) else o.number)"/>
+                </p>
+                <p t-if="(o.partner_bank_id.qr_code_valid == False)">
+                    <strong class="text-center">The SEPA QR Code informations are not set correctly.</strong><br/>
+                </p>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@id='qrcode']" position="replace"/>
+
+        <xpath expr="//table[@name='invoice_line_table']" position="attributes">
+            <attribute name="class">text-center table table-sm o_main_table o_bg_gris</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//th" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//td" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//th[2]" position="attributes">
+            <attribute name="class">d-none text-left</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//th[3]" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//td[3]" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//th[4]" position="replace">
+            <th width="120" t-attf-class="text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"><span>Precio U.</span></th>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//td[4]" position="attributes">
+            <attribute name="t-attf-class">text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}</attribute>
+        </xpath>
+
+        <xpath expr="//span[@t-field='line.price_unit']" position="attributes">
+            <attribute name="t-options">{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//th[5]" position="attributes">
+            <attribute name="t-attf-class">text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//td[5]" position="attributes">
+            <attribute name="t-attf-class">text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//th[6]" position="attributes">
+            <attribute name="t-attf-class">text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//td[6]" position="attributes">
+            <attribute name="t-attf-class">text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//th[7]" position="attributes">
+            <attribute name="class">text-center</attribute>
+        </xpath>
+
+        <xpath expr="//table[@name='invoice_line_table']//td[7]" position="attributes">
+            <attribute name="class">text-center o_price_total</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']/span[@t-field='line.name']" position="replace">
+            <pre t-raw='line.name.replace("[%s]" % line.product_id.default_code, "").replace("[%s]" % line.referencia_cliente, "").strip()'
+                style="font-family:inherit;font-size:inherit;color:inherit;margin-bottom:0;overflow:hidden;"/>
+        </xpath>
+
+        <xpath expr="//p[@t-if='o.payment_term_id']" position="replace">
+            <p t-if="o.payment_term_id" style="margin-bottom:0;padding-bottom:0;">
+                <b>Condiciones de pago:</b>
+                <span t-field="o.payment_term_id.note"/>
+            </p>
+        </xpath>
+
+        <xpath expr="//table[1]/thead[1]/tr[1]/th[1]" position="before">
+            <th class="text-center">Pos.</th>
+        </xpath>
+        
+        <xpath expr="//th[@name='th_description']" position="replace">
+            <th name="th_description" class="text-center"><span>Referencia/Descripción</span></th>
+        </xpath>
+        
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th t-if="o.type in ['out_invoice', 'out_refund']" class="text-center">
+                Código/Peso
+            </th>
+        </xpath>
+
+        <xpath expr="//tbody[hasclass('invoice_tbody')]" position="before">
+            <t t-set="subtotal" t-value="0.0"/>
+            <t t-set="lines_grouped" t-value="o.lines_grouped_by_picking()"/>
+        </xpath>
+        
+        <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
+            <td name="account_invoice_line_name">
+                <t t-if="o.type in ['out_invoice', 'out_refund']">
+                    <strong><span t-field="line.referencia_cliente"/></strong> <br/>
+                    <t t-esc="line.name.replace('[%s]' % line.referencia_cliente, '')"/>
+                </t>
+                <t t-if="o.type in ['in_invoice', 'in_refund']">
+                    <strong><span t-field="line.product_id.default_code"/></strong> <br/>
+                    <t t-esc="line.name.replace('[%s]' % line.product_id.default_code, '')"/>
+                </t>
+                <t t-if="o.type not in ['out_invoice', 'out_refund', 'in_invoice', 'in_refund']">
+                    <span t-field="line.name"/>
+                </t>
+            </td>
+        </xpath>
+        
+        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+            <td t-if="o.type in ['out_invoice', 'out_refund']" class="text-center">
+                <span t-field="line.product_id.intrastat_id.code"/> / <span t-field="line.product_id.weight"/> kg
+            </td>
+        </xpath>
+    
+        <xpath expr="//tbody[hasclass('invoice_tbody')]//tr//td[1]" position="before">
+            <td style="background-color:#e9ecef;"><t t-esc="lines_group_index + 1"/></td>
+        </xpath>
+        
+        <xpath expr="//t[@t-foreach='o.invoice_line_ids']" position="attributes">
+            <attribute name="t-foreach">lines_grouped</attribute>
+            <attribute name="t-as">lines_group</attribute>
+        </xpath>
+
+        <xpath expr="//t[@t-foreach='lines_grouped']/t[@t-set='current_subtotal']" position="replace"/>
+
+        <xpath expr="//tbody[hasclass('invoice_tbody')]//tr[1]" position="before">
+            <t t-set="line" t-value="lines_group['line']"/>
+            <t t-set="picking" t-value="lines_group['picking']"/>
+            <t t-set="next_picking"
+               t-value="[lines_grouped[i + 1]['picking'] for i, x in enumerate(lines_grouped) if x == lines_group and i &lt; len(lines_grouped) - 1] or [False]"/>
+        </xpath>
+
+        <xpath expr="//span[@t-field='line.discount']" position="after">
+            %
+        </xpath>
+        
+        <xpath expr="//tbody[hasclass('invoice_tbody')]//tr[1]//td[1]" position="before">
+            <t t-if="picking != last_picking">
+                <tr t-if="picking">
+                    <td class="border-black albaran_report border-top border-bottom border-dark" colspan="10">
+                        <strong>
+                            <span>Pedido:</span>
+                            <span t-field="picking.sale_id.name"/>
+                            <t t-if="picking.sale_id.client_order_ref">
+                                <span t-translation="off"> (</span><span t-field="picking.sale_id.client_order_ref"/><span t-translation="off">)</span>
+                            </t>
+                            <span>Albarán:</span>
+                            <span t-field="picking.date_done" t-options="{'widget': 'date'}"/>
+                            <span t-field="picking.name"/>
+                            
+                            <t t-set="num_envios" t-value="0"/>
+                            <t t-foreach="picking.gene_envio_ids" t-as="envio">
+                                <t t-if="envio.name_agencia">
+                                    <t t-if="num_envios > 0" t-esc="', '"/>
+                                    <t t-set="num_envios" t-value="num_envios+1"/>
+                                    Envío por: <t t-esc="envio.name_agencia"/>
+                                    <t t-if="envio.codigo_seguimiento">
+                                        (<t t-esc="envio.codigo_seguimiento"/>)
+                                    </t>
+                                </t>
+                            </t>
+                        </strong>
+                    </td>
+                </tr>
+            </t>
+        </xpath>
+
+        <xpath expr="//tbody[hasclass('invoice_tbody')]//tr[1]" position="inside">
+            <tr t-if="picking and picking != next_picking[0] and len(o.picking_ids) > 1">
+                <td colspan="10" class="text-right">
+                    <br/>
+                    <strong>Subtotal: </strong>
+                    <strong t-esc="subtotal"
+                            t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    <br/>
+                </td>
+                <t t-set="subtotal" t-value="0.0"/>
+            </tr>
+            <t t-set="last_picking" t-value="picking"/>
+        </xpath>
+
+        <xpath expr="//span[@t-esc=	&quot;', '.join(map(lambda x: (x.description or x.name), line.invoice_line_tax_ids))&quot;]" position="attributes">
+            <attribute name="t-esc">', '.join(map(lambda x: ("%.2f" % x.amount) + ' %', line.invoice_line_tax_ids)).replace('.', ',')</attribute>
+        </xpath>
+
+        <xpath expr="//td/span[@t-field='line.quantity']" position="attributes">
+            <attribute name="t-esc">lines_group['quantity']</attribute>
+            <attribute name="t-field"/>
+            <attribute name="t-options">{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}</attribute>
+        </xpath>
+
+        <xpath expr="//td/span[@t-field='line.price_subtotal']" position="before">
+            <t t-if="lines_group['quantity'] != line.quantity" id="picking_subtotal" groups="!sale.group_show_price_total">
+                <!-- Compute subtotal for that picking with discounts -->
+                <t t-set="line_picking_subtotal" t-value="line.quantity and lines_group['quantity'] * (line.price_subtotal / line.quantity) or 0.0"/>
+                <t t-set="subtotal" t-value="(subtotal or 0.0) + line_picking_subtotal"/>
+                <span t-esc="line_picking_subtotal"
+                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+            </t>
+            <t t-else="">
+                <t t-set="subtotal" t-value="(subtotal or 0.0) + line.price_subtotal"/>
+            </t>
+        </xpath>
+
+        <xpath expr="//td/span[@t-field='line.price_subtotal']" position="attributes">
+            <attribute name="t-if">lines_group['quantity'] == line.quantity</attribute>
+        </xpath>
+
+        <xpath expr="//td/span[@t-field='line.price_total']" position="attributes">
+            <attribute name="t-if">lines_group['quantity'] == line.quantity</attribute>
+        </xpath>
+
+        <xpath expr="//td/span[@t-field='line.price_total']" position="before">
+            <t t-if="lines_group['quantity'] != l.quantity" groups="sale.group_show_price_total">
+                <!-- Compute subtotal for that picking with discounts -->
+                <t t-set="line_picking_subtotal" t-value="line.quantity and lines_group['quantity'] * (line.price_total / line.quantity) or 0.0"/>
+                <t t-set="subtotal" t-value="(subtotal or 0.0) + line_picking_subtotal"/>
+                <span t-esc="line_picking_subtotal"
+                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+            </t>
+            <t t-else="">
+                <t t-set="subtotal" t-value="(subtotal or 0.0) + line.price_subtotal"/>
+            </t>
+        </xpath>
+
+        <xpath expr="//p[@name='note']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        
+        <xpath expr="//p[@name='note']" position="before">
+            <div t-if="o.equipo_id" class="row mt-3">
+                <div class="col-12">
+                    <strong style="font-size:1.2em;display:block">Equipo</strong>
+                    <t t-esc="o.equipo_id.descripcion"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-auto">
+                    <t t-if="o.equipo_id.serie">
+                        <strong>Serie:</strong> <t t-esc="o.equipo_id.serie"/> <br/>
+                    </t>
+                    <t t-if="o.equipo_id.serial">
+                        <strong>Serial:</strong> <t t-esc="o.equipo_id.serial"/>
+                    </t>
+                </div>
+                <div class="col-auto">
+                    <t t-if="o.equipo_id.referencia">
+                        <strong>Referencia:</strong> <t t-esc="o.equipo_id.referencia"/><br/>
+                    </t>
+                    <t t-if="o.equipo_id.eme">
+                        <strong>EME:</strong> <t t-esc="o.equipo_id.eme"/>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//tr[hasclass('is-subtotal')]/parent::t" position="attributes">
+            <attribute name="t-if">current_section and (line_last or (line_index and o.invoice_line_ids[line_index+1].display_type == 'line_section'))</attribute>
+        </xpath>
+    </template>
+
+    <template id="report_invoice_payment_mode" inherit_id="account_payment_partner.report_invoice_payment_mode">
+        <xpath expr="//p[@t-as='partner_bank']" position="replace"/>
+        <xpath expr="//p[@t-if='o.payment_mode_id.note'][1]" position="replace">
+            <p t-if="o.payment_mode_id.note" style="margin-bottom:0; padding-bottom:0;">
+                <strong>Forma de pago:</strong>
+                <span t-field="o.payment_mode_id.name"/>
+            </p>
+            
+            <t t-if="o.payment_mode_id.id in [2, 10]">
+                <p style="margin-bottom:0; padding-bottom:0;">
+                    <strong>Cuenta bancaria: </strong>
+                    <span t-field="o.payment_mode_id.fixed_journal_id.bank_account_id.acc_number"/>
+                </p>
+
+                <p style="margin-bottom:0; padding-bottom:0;">
+                    <strong>BIC/SWIFT: </strong>
+                    <span t-field="o.payment_mode_id.fixed_journal_id.bank_id.bic"/>
+                </p>
+            </t>
+            
+            <t t-if="o.payment_mode_id and o.payment_mode_id.id not in [2, 10] and o.payment_mode_id.show_bank_account != 'no'">
+                <p t-foreach="o.partner_banks_to_show()" t-as="partner_bank" style="margin-bottom:0; padding-bottom:0;">
+                    <strong>Cuenta bancaria:</strong>
+                    <t t-if="partner_bank.bank_id">
+                        <t t-esc="partner_bank.bank_id.name"/>
+                    </t>
+                    <t t-if="o.payment_mode_id.show_bank_account == 'full'">
+                        <span t-field="partner_bank.acc_number"/>
+                    </t>
+                    <t t-elif="o.payment_mode_id.show_bank_account == 'first'">
+                        <span t-esc="partner_bank.acc_number[:o.payment_mode_id.show_bank_account_chars] + '*' * (len(partner_bank.acc_number) - o.payment_mode_id.show_bank_account_chars)"/>
+                    </t>
+                    <t t-elif="o.payment_mode_id.show_bank_account == 'last'">
+                        <span t-esc="'*' * (len(partner_bank.acc_number) - o.payment_mode_id.show_bank_account_chars) + partner_bank.acc_number[-o.payment_mode_id.show_bank_account_chars:]"/>
+                    </t>
+
+                    <br/>
+                    <t t-if="partner_bank.bank_id.bic">
+                        <strong>BIC/SWIFT:</strong>
+                        <t t-esc="partner_bank.bank_id.bic"/>
+                    </t>
+                </p>
+            </t>
+            
+            <t t-if="o.fiscal_position_id and o.fiscal_position_id.sudo().note2">
+                <t t-raw="o.fiscal_position_id.sudo().note2"/>
+            </t>
+
+<!--             <t t-if="o.fiscal_position_id and o.payment_mode_id">
+                <t t-set="payment_mode" t-value="o.fiscal_position_id.modo_pago(o.payment_mode_id.id)"/>
+                <t t-if="payment_mode">
+                    <br/>
+                    <span t-if="payment_mode" t-raw="payment_mode"/>
+                </t>
+            </t> -->
+        </xpath>
+    </template>
+
+    <template id="report_invoice_document_with_payments" inherit_id="account.report_invoice_document_with_payments" priority="99">
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[6]/span[1]" position="attributes">
+            <attribute name="t-esc">', '.join(map(lambda x: ( x.name), line.invoice_line_tax_ids))</attribute>
+        </xpath>
+    </template>
+</odoo>
+

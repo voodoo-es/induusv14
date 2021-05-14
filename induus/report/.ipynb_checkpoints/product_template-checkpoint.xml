@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="label_product_template_view" inherit_id="stock_zebra.label_product_template_view">
+        <xpath expr="//t[@t-translation='off'][1]" position="replace">
+            <t t-translation="off">
+^XA
+^CI28
+^FO170,30
+^XGE:INDUUS.GRF^FS
+^FO25,140
+^A0N,44,33,E:ARI001.FNT^A0N,50,50^FD<t t-raw="product.default_code"/>^FS
+^FO24,140
+^A0N,44,33,E:ARI001.FNT^A0N,50,50^FD<t t-raw="product.default_code"/>^FS
+^FO25,141
+^A0N,44,33,E:ARI001.FNT^A0N,50,50^FD<t t-raw="product.default_code"/>^FS
+^FO25,190
+^A0N,44,33,E:ARI000.FNT^FD<t t-raw="product.display_name"/>^FS
+^FO25,360
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD<t t-esc="datetime.datetime.now().strftime('%d/%m/%Y')"/>^FS
+^FO485,360
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD1 Unit(s)^FS
+^FO484,360
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD1 Unit(s)^FS
+^FO485,361
+^A0N,44,33,E:ARI000.FNT^A0N,30,30^FD1 Unit(s)^FS
+^XZ
+                </t>
+        </xpath>
+    </template>
+</odoo>

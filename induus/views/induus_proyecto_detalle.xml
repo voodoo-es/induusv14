@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="induus_proyecto_detalle_form" model="ir.ui.view">
+        <field name="name">induus.proyecto_detalle.form</field>
+        <field name="model">induus.proyecto_detalle</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="sale_order_id"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="unidades"/>
+                            <field name="coste"/>
+                            <field name="margen"/>
+                            <field name="coste_real"/>
+                        </group>
+                        <group>
+                            <field name="total"/>
+                            <field name="precio_venta"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Líneas">
+                        <field name="linea_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="product_ref"/>
+                                <field name="partner_id"/>
+                                <field name="descripcion"/>
+                                <field name="unidades"/>
+                                <field name="cantidad_producto"/>
+                                <field name="cantidad_prevista"/>
+                                <field name="coste"/>
+                                <field name="subtotal"/>
+                                <field name="pvp"/>
+                                <field name="venta_total"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="induus_proyecto_detalle_short_lineas_form" model="ir.ui.view">
+        <field name="name">induus.proyecto_detalle.form</field>
+        <field name="model">induus.proyecto_detalle</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="unidades"/>
+                        </group>
+                    </group>
+                    <group string="Líneas">
+                        <field name="linea_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="product_ref"/>
+                                <field name="partner_id"/>
+                                <field name="descripcion"/>
+                                <field name="unidades"/>
+                                <field name="cantidad_producto"/>
+                                <field name="cantidad_prevista"/>
+                                <field name="coste"/>
+                                <field name="subtotal"/>
+                                <field name="pvp"/>
+                                <field name="venta_total"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="beneficio"/>
+                                <field name="beneficio_porcentaje"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="induus_proyecto_detalle_tree" model="ir.ui.view">
+        <field name="name">induus.proyecto_detalle.tree</field>
+        <field name="model">induus.proyecto_detalle</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="unidades"/>
+                <field name="coste"/>
+                <field name="total"/>
+                <field name="margen"/>
+                <field name="coste_real"/>
+                <field name="precio_unitario"/>
+                <field name="precio_venta"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="induus_proyecto_detalle_search" model="ir.ui.view">
+        <field name="name">induus.proyecto_detalle.search</field>
+        <field name="model">induus.proyecto_detalle</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="induus_proyecto_detalle_linea_form" model="ir.ui.view">
+        <field name="name">induus.proyecto_detalle_linea.form</field>
+        <field name="model">induus.proyecto_detalle_linea</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="product_ref"/>
+                        <field name="partner_id"/>
+                        <field name="descripcion"/>
+                        <field name="unidades"/>
+                        <field name="cantidad_producto"/>
+                        <field name="cantidad_prevista"/>
+                        <field name="pvp"/>
+                        <field name="coste"/>
+                        <field name="subtotal"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="induus_proyecto_detalle_linea_tree" model="ir.ui.view">
+        <field name="name">induus.proyecto_detalle_linea.tree</field>
+        <field name="model">induus.proyecto_detalle_linea</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="proyecto_detalle_id" invisible="1"/>
+                <field name="product_id"/>
+                <field name="product_ref"/>
+                <field name="partner_id"/>
+                <field name="descripcion"/>
+                <field name="unidades" sum="Total"/>
+                <field name="cantidad_producto"/>
+                <field name="cantidad_prevista"/>
+                <field name="pvp" sum="Total"/>
+                <field name="venta_total" sum="Total"/>
+                <field name="coste"/>
+                <field name="subtotal" sum="Total"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="induus_proyecto_detalle_linea_completa_tree" model="ir.ui.view">
+        <field name="name">induus.proyecto_detalle_linea.tree</field>
+        <field name="model">induus.proyecto_detalle_linea</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="proyecto_detalle_id"/>
+                <field name="product_id"/>
+                <field name="product_ref"/>
+                <field name="partner_id"/>
+                <field name="descripcion"/>
+                <field name="unidades"/>
+                <field name="cantidad_producto"/>
+                <field name="cantidad_prevista"/>
+                <field name="pvp"/>
+                <field name="coste"/>
+                <field name="subtotal"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="proyecto_detalle_coste"/>
+                <field name="proyecto_detalle_unidades"/>
+                <field name="proyecto_detalle_total"/>
+                <field name="proyecto_detalle_precio_venta"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="induus_proyecto_detalle_linea_search" model="ir.ui.view">
+        <field name="name">induus.proyecto_detalle_linea.search</field>
+        <field name="model">induus.proyecto_detalle_linea</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="descripcion"/>
+                <field name="proyecto_detalle_id"/>
+                <group expand="0" string="Group By">
+                    <filter string="Proyecto detalle" name="group_proyecto_detalle_id" context="{'group_by':'proyecto_detalle_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_induus_proyecto_detalle_linea_tree" model="ir.actions.act_window">
+        <field name="name">Detalle proyecto</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">induus.proyecto_detalle_linea</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('proyecto_detalle_id.sale_order_id', '=', active_id)]</field>
+        <field name="context">{"search_default_group_proyecto_detalle_id":1}</field>
+        <field name="view_id" ref="induus_proyecto_detalle_linea_completa_tree"/>
+    </record>
+</odoo>

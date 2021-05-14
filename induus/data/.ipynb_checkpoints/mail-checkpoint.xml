@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="email_template_seguimiento_purchase_order" model="mail.template">
+        <field name="name">Seguimiento pedido de compra</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="lang">${object.lang}</field>
+        <field name="email_from">${object.user_id.email_formatted |safe}</field>
+        <field name="partner_to">${object.id}</field>
+        <field name="subject">Fecha entrega pedido</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Apreciado Sr./Sra. ${object.name},
+                    <br/><br/>
+
+                    Nos ponemos en contacto con usted con relación a los pedidos que
+                    aparecen en la siguiente tabla.
+
+                    <br/><br/>
+
+                    Recientemente se ha cumplido el plazo de entrega previsto y no nos consta haber
+                    recibido el material. Le rogamos que nos indique cual es el nuevo plazo de entrega.
+
+                    <br/><br/>
+
+                    <table border="1" style="border:1px solid #000; font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th style="padding:5px; font-size: 13px;">Pedido de compra</th>
+                                <th style="padding:5px; font-size: 13px;">Fecha pedido</th>
+                                <th style="padding:5px; font-size: 13px;">Referencia</th>
+                                <th style="padding:5px; font-size: 13px;">Unidades</th>
+                                <th style="padding:5px; font-size: 13px;">Fecha prevista</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        % for ol in object.purchase_order_line_pendientes_ids:
+                            <tr>
+                                <td style="padding:5px; font-size: 13px;">${ol.order_id.name}</td>
+                                <td style="padding:5px; font-size: 13px;">${format_tz(ol.order_id.date_order,format='%d/%m/%Y')}</td>
+                                <td style="padding:5px; font-size: 13px;">${ol.display_name}</td>
+                                <td style="text-align:right;padding:5px; font-size: 13px;">${ol.product_qty - ol.qty_received}</td>
+                                <td style="padding:5px; font-size: 13px;">${format_tz(ol.date_planned,format='%d/%m/%Y')}</td>
+                            </tr>
+                        % endfor
+                        </tbody>
+                    </table>
+
+                    <br/><br/>
+
+                    Quedamos a la espera de su respuesta, muchas gracias por su atención.
+                </p>
+            </div>
+
+        </field>
+    </record>
+
+    <record id="email_template_seguimiento_purchase_order_line" model="mail.template">
+        <field name="name">Seguimiento pedido de compra</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="lang">${object.partner_id.parent_id and object.partner_id.parent_id.lang or object.partner_id.lang}</field>
+        <field name="email_from">${object.user_id.email_formatted |safe}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field name="subject">Fecha entrega pedido</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Apreciado Sr./Sra. ${object.partner_id.name},
+                    <br/><br/>
+
+                    Nos ponemos en contacto con usted con relación
+                    al pedido que aparece en la siguiente tabla.
+
+                    <br/><br/>
+
+                    Recientemente se ha cumplido el plazo de entrega previsto
+                    y no nos consta haber recibido el material. Le rogamos
+                    que nos indique cual es el nuevo plazo de entrega.
+
+                    <br/><br/>
+
+                    <table border="1" style="border:1px solid #000; font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th style="padding:5px; font-size: 13px;">Pedido de compra</th>
+                                <th style="padding:5px; font-size: 13px;">Fecha pedido</th>
+                                <th style="padding:5px; font-size: 13px;">Referencia</th>
+                                <th style="padding:5px; font-size: 13px;">Unidades</th>
+                                <th style="padding:5px; font-size: 13px;">Fecha prevista</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        % for line in object.order_line:
+                            %if line.id in ctx['lineas']:
+                            <tr>
+                                <td style="padding:5px; font-size: 13px;">${line.order_id.name}</td>
+                                <td style="padding:5px; font-size: 13px;">${format_tz(line.order_id.date_order,format='%d/%m/%Y')}</td>
+                                <td style="padding:5px; font-size: 13px;">${line.display_name}</td>
+                                <td style="text-align:right;padding:5px; font-size: 13px;">${line.product_qty - line.qty_received}</td>
+                                <td style="padding:5px; font-size: 13px;">${format_tz(line.date_planned,format='%d/%m/%Y')}</td>
+                            </tr>
+                            %endif
+                        % endfor
+                        </tbody>
+                    </table>
+
+                    <br/><br/>
+
+                    Quedamos a la espera de su respuesta, muchas gracias por su atención.
+                </p>
+            </div>
+
+        </field>
+    </record>
+
+    <record id="email_template_seguimiento_stock_picking" model="mail.template">
+        <field name="name">Seguimiento pedido de compra (Albarán)</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="lang">${object.lang}</field>
+        <field name="email_from">${object.purchase_id.user_id.email_formatted |safe}</field>
+        <field name="partner_to">${object.purchase_id.partner_id.id}</field>
+        <field name="subject">Fecha entrega pedido</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Apreciado Sr./Sra. ${object.purchase_id.partner_id.name},
+                    <br/><br/>
+
+                    Nos ponemos en contacto con usted con relación
+                    al pedido que aparece en la siguiente tabla.
+
+                    <br/><br/>
+
+                    Recientemente se ha cumplido el plazo de entrega previsto
+                    y no nos consta haber recibido el material. Le rogamos
+                    que nos indique cual es el nuevo plazo de entrega.
+
+                    <br/><br/>
+
+                    <table border="1" style="border:1px solid #000; font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th style="padding:5px; font-size: 13px;">Pedido de compra</th>
+                                <th style="padding:5px; font-size: 13px;">Fecha pedido</th>
+                                <th style="padding:5px; font-size: 13px;">Referencia</th>
+                                <th style="padding:5px; font-size: 13px;">Unidades</th>
+                                <th style="padding:5px; font-size: 13px;">Fecha prevista</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        % for line in object.purchase_id.order_line:
+                            %if line.id in ctx['lineas']:
+                            <tr>
+                                <td style="padding:5px; font-size: 13px;">${line.order_id.name}</td>
+                                <td style="padding:5px; font-size: 13px;">${format_tz(line.order_id.date_order,format='%d/%m/%Y')}</td>
+                                <td style="padding:5px; font-size: 13px;">${line.display_name}</td>
+                                <td style="text-align:right;padding:5px; font-size: 13px;">${line.product_qty - line.qty_received}</td>
+                                <td style="padding:5px; font-size: 13px;">${format_tz(line.date_planned,format='%d/%m/%Y')}</td>
+                            </tr>
+                            %endif
+                        % endfor
+                        </tbody>
+                    </table>
+
+                    <br/><br/>
+
+                    Quedamos a la espera de su respuesta, muchas gracias por su atención.
+                </p>
+            </div>
+
+        </field>
+    </record>
+
+    <record id="email_template_seguimiento_oferta" model="mail.template">
+        <field name="name">Seguimiento oferta cliente</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="email_from">${object.user_id.email_formatted |safe}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field name="subject">Prespuesto ${object.name}</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Apreciado Sr./Sra. ${object.partner_id.name},
+                    <br/><br/>
+
+                    Nos ponemos en contacto con usted con relación a la oferta que le
+                    remitimos el pasado ${format_tz(object.date_order)}.
+
+                    <br/><br/>
+
+                    Dado que todavía no hemos recibido respuesta por su parte, le
+                    agradeceríamos que nos indicase si sigue estando interesado en la
+                    misma y si necesita cualquier información adicional.
+
+                    <br/><br/>
+
+                    Recuerde que estamos a su disposición para ayudarle en todo lo que necesite.
+
+                    <br/><br/>
+
+                    En caso de que haya descartado nuestra oferta, le estaríamos muy
+                    agradecidos en el caso que nos indicase cuales han sido los motivos.
+                    Esto nos ayudará a ofrecerle un mejor servicio la próxima vez.
+
+                    <br/><br/>
+
+                    Quedamos a la espera de su respuesta, muchas gracias por su atención.
+                </p>
+            </div>
+        </field>
+    </record>
+
+    <record id="email_template_error_facturacion_automatica" model="mail.template">
+        <field name="name">Error facturación automática</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="email_to">${'a.delrio@ingetive.com,f.villafranca@ingetive.com,borja.gomez@induus.com'|safe}</field>
+        <field name="subject">Error en la facturación automatica (Induus)</field>
+    </record>
+</odoo>
+
+

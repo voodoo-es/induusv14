@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_frontend" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <link href="/induus/static/src/scss/portal.scss" rel="stylesheet" type="text/scss"/>
+            <script src="/induus/static/src/js/website_sale.js" type="text/javascript"/>
+            <script src="/induus/static/src/js/induus.js" type="text/javascript"/>
+            <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.19.1/jquery.validate.min.js"/>
+            <script src="/induus/static/src/js/mass_mailing.js" type="text/javascript"/>
+            <script type="text/javascript">
+                $(function() {
+                    if($("#wrapwrap.o_header_overlay").length){
+                        $("#wrapwrap.o_header_overlay").removeClass('o_header_overlay');
+                    }
+                });
+            </script>
+        </xpath>
+    </template>
+</odoo>

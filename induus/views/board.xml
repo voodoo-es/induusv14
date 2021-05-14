@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="board_invoice_view">
+        <field name="name">Facturas</field>
+        <field name="model">board.board</field>
+        <field name="arch" type="xml">
+            <form string="Facturas">
+                <board style="2-1">
+                    <column>
+                    </column>
+                </board>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="board_sale_order_view">
+        <field name="name">Ventas</field>
+        <field name="model">board.board</field>
+        <field name="arch" type="xml">
+            <form string="Ventas">
+                <board style="2-1">
+                    <column>
+                    </column>
+                </board>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="board_purchase_order_view">
+        <field name="name">Compras</field>
+        <field name="model">board.board</field>
+        <field name="arch" type="xml">
+            <form string="Compras">
+                <board style="2-1">
+                    <column>
+                    </column>
+                </board>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="board_crm_view">
+        <field name="name">CRM</field>
+        <field name="model">board.board</field>
+        <field name="arch" type="xml">
+            <form string="CRM">
+                <board style="2-1">
+                    <column>
+                    </column>
+                </board>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="open_board_invoice_action">
+        <field name="name">Facturas</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_invoice_view"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="open_board_sale_order_action">
+        <field name="name">Ventas</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_sale_order_view"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="open_board_purchase_order_action">
+        <field name="name">Compras</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_purchase_order_view"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="open_board_crm_action">
+        <field name="name">CRM</field>
+        <field name="res_model">board.board</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_crm_view"/>
+    </record>
+
+    <menuitem
+        id="menu_board_invoice"
+        parent="base.menu_board_root"
+        action="open_board_invoice_action"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_board_sale_order"
+        parent="base.menu_board_root"
+        action="open_board_sale_order_action"
+        sequence="15"/>
+
+    <menuitem
+        id="menu_board_purchase_order"
+        parent="base.menu_board_root"
+        action="open_board_purchase_order_action"
+        sequence="20"/>
+
+    <menuitem
+        id="menu_board_crm"
+        parent="base.menu_board_root"
+        action="open_board_crm_action"
+        sequence="25"/>
+</odoo>
