@@ -91,7 +91,7 @@
         'views/base.xml',
         'views/stock.xml',
         'views/stock_picking.xml', # error
-#         'views/crm_lead.xmsl', # error
+        'views/crm_lead.xml', # error
         'views/delivery_carrier.xml',
         'views/payment_view.xml',
         'views/induus_ventas_producto.xml', # error
@@ -102,7 +102,7 @@
         'views/account_bank_statement.xml',
         'views/mail_tracking_email.xml',
         'views/mail_activity.xml',
-#         'templates/assets.xml',
+        'templates/assets.xml',
 #         'templates/portal.xml',
         'templates/mass_mailing.xml',
         'templates/payment.xml',
@@ -113,11 +113,11 @@
 # #         'templates/website_legal_page.xml',
 # #         'templates/website_cookie_notice.xml',
         'templates/auth_signup.xml',
-#         'wizard/sale_order_lost.xml',
-#         'wizard/induus_generar_envio.xml',
-#         'wizard/induus_anadir_envio.xml',
-#         'wizard/induus_importar_envio.xml',
-#         'wizard/induus_dias_cobro.xml',
+        'wizard/sale_order_lost.xml',
+        'wizard/induus_generar_envio.xml',
+        'wizard/induus_anadir_envio.xml',
+        'wizard/induus_importar_envio.xml',
+        'wizard/induus_dias_cobro.xml',
     ],
     'installable': True,
     'auto_install': False,

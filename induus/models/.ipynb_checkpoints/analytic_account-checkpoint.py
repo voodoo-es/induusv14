@@ -126,7 +126,7 @@ class AccountAnalytic(models.Model):
 
                     values.update({
                         'invoice_id': invoice.id,
-                        'invoice_date_invoice': invoice.date_invoice,
+                        'invoice_date_invoice': invoice.invoice_date,
                         'invoice_number': invoice.number,
                         'invoice_date_due': invoice.date_due,
                         'invoice_state': invoice.state,
@@ -179,7 +179,7 @@ class AccountAnalyticLine(models.Model):
                 if invoice:
                     values_order.update({
                         'invoice_id': invoice.id,
-                        'invoice_date_invoice': invoice.date_invoice,
+                        'invoice_date_invoice': invoice.invoice_date,
                         'invoice_number': invoice.number,
                         'invoice_amount_total': invoice.amount_total,
                     })
