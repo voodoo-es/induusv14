@@ -1,0 +1,4 @@
+mysql-connector
+git+https://github.com/OCA/openupgradelib.git@master
+qrcode
+pyotp
