@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="unsubscribe" inherit_id="mass_mailing.unsubscribe">
+        <xpath expr="//div[@id='subscription_info']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+
+        <xpath expr="//h1[1]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+
+        <xpath expr="//div[@id='div_opt_out']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
+</odoo>

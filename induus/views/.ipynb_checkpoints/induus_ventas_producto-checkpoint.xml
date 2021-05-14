@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="induus_ventas_producto_tree" model="ir.ui.view">
+        <field name="name">induus.ventas.producto.tree</field>
+        <field name="model">induus.ventas.producto</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="referencia"/>
+                <field name="nombre"/>
+                <field name="categoria"/>
+                <field name="pedido"/>
+                <field name="fecha"/>
+                <field name="cliente"/>
+                <field name="cliente_padre"/>
+                <field name="cantidad"/>
+                <field name="precio"/>
+                <field name="costo"/>
+                <field name="costo_actual"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="induus_ventas_producto_tree_action" model="ir.actions.act_window">
+        <field name="name">Ventas de producto</field>
+        <field name="res_model">induus.ventas.producto</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id"></field>  <!-- force empty -->
+    </record>
+
+    <record id="induus_ventas_producto_search" model="ir.ui.view">
+        <field name="name">induus.ventas.producto.search</field>
+        <field name="model">induus.ventas.producto</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="referencia"/>
+                <field name="nombre"/>
+                <field name="categoria"/>
+                <field name="pedido"/>
+                <field name="cliente"/>
+                <field name="cliente_padre"/>
+                <group expand="0" string="Group By">
+                    <filter string="Referencia" name="group_by_referencia" domain="[]" context="{'group_by':'referencia'}"/>
+                    <filter string="Nombre" name="group_by_nombre" domain="[]" context="{'group_by':'nombre'}"/>
+                    <filter string="Categoria" name="group_by_categoria" domain="[]" context="{'group_by':'categoria'}"/>
+                    <filter string="Pedido" name="group_by_nombre" domain="[]" context="{'group_by':'pedido'}"/>
+                    <filter string="Cliente" name="group_by_cliente" domain="[]" context="{'group_by':'cliente'}"/>
+                    <filter string="Comprañia del cliente" name="group_by_cliente_padre" domain="[]" context="{'group_by':'cliente_padre'}"/>
+                    <filter string="Fecha pedido" name="group_by_fecha_pedido" domain="[]" context="{'group_by':'fecha'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="menu_induus_ventas_producto_tree"
+              action="induus_ventas_producto_tree_action"
+              name="Ventas de producto"
+              parent="sale.menu_sale_report"
+              sequence="20"/>
+</odoo>

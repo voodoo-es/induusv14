@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_category_form_view" model="ir.ui.view">
+        <field name="name">product.category.form.induus</field>
+        <field name="model">product.category</field>
+        <field ref="product.product_category_form_view" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="imprimir_etiqueta"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

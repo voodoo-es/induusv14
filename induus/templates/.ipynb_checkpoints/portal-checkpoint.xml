@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="frontend_layout" inherit_id="portal.frontend_layout">
+        <xpath expr="//t[@t-set='head_website']" position="before">
+            <t t-set="codigo_pais_envio" t-value="'ES'"/>
+            <t t-if="request.env.context.get('partner')">
+                <t t-set="current_partner" t-value="request.env.context.get('partner')"/>
+                <t t-set="partner_addr" t-value="current_partner.address_get(['delivery'])"/>
+                <t t-if="partner_addr">
+                    <t t-set="direccion_envio_partner" t-value="request.env['res.partner'].sudo().browse(partner_addr['delivery'])"/>
+                    <t t-if="direccion_envio_partner and direccion_envio_partner.country_id">
+                        <t t-set="codigo_pais_envio" t-value="direccion_envio_partner.country_id.code"/>
+                    </t>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_details" inherit_id="portal.portal_my_details">
+        <xpath expr="//h3[1]" position="attributes">
+            <attribute name="class">o_tit_your_details</attribute>
+        </xpath>
+
+        <xpath expr="//form[1]" position="attributes">
+            <attribute name="class">o_frn_your_details</attribute>
+        </xpath>
+    </template>
+</odoo>

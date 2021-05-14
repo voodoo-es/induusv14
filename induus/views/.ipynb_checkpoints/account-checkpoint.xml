@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_bank_statement_line_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.tree.induus</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+                <field name="ref"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="amount" widget="Monetary"/>
+                <field name="statement_id"/>
+<!--                 <field name="journal_currency_id" invisible="1"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <act_window id="action_account_bank_statement_line"
+                name="Líneas extracto bancario"
+                res_model="account.bank.statement.line"
+                view_mode="tree,form"
+                view_id="account_bank_statement_line_tree"/>
+
+<!--     <menuitem action="action_account_bank_statement_line"
+              id="menu_account_bank_statement_line"
+              parent="account.menu_finance_entries_accounting_entries"
+              groups="account.group_account_user"
+              sequence="50"/> -->
+
+<!--     <menuitem id="account.menu_board_journal_1"
+              parent="account_accountant.menu_accounting"
+              sequence="1"/> -->
+
+<!--     <menuitem id="account.menu_finance_receivables"
+              parent="account_accountant.menu_accounting"
+              sequence="2"/> -->
+
+<!--     <menuitem id="account.menu_finance_payables"
+              parent="account_accountant.menu_accounting"
+              sequence="3"/> -->
+
+<!--     <menuitem id="account.menu_finance_entries"
+              parent="account_accountant.menu_accounting"
+              sequence="4"/> -->
+
+<!--     <menuitem id="account.menu_finance_reports"
+              parent="account_accountant.menu_accounting"
+              sequence="90"/> -->
+
+<!--     <menuitem id="account.menu_finance_configuration"
+              parent="account_accountant.menu_accounting"
+              sequence="95"/> -->
+
+<!--     <menuitem id="account_payment_order.account_payment_order_outbound_menu"
+              action="account_payment_order.account_payment_order_outbound_action"
+              parent="account_accountant.menu_accounting"
+              sequence="5"/> -->
+
+<!--     <menuitem id="account_payment_order.account_payment_order_inbound_menu"
+              action="account_payment_order.account_payment_order_inbound_action"
+              parent="account_accountant.menu_accounting"
+              sequence="5"/> -->
+
+<!--     <menuitem id="account.menu_finance"
+              parent="account_accountant.menu_accounting"
+              sequence="7"/> -->
+
+<!--     <menuitem id="account_payment_order.payment_root"
+              parent="account.menu_finance"
+              sequence="8"/> -->
+</odoo>

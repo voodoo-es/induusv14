@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="induus_generar_envio_form" model="ir.ui.view">
+        <field name="name">induus.generar_envio.form</field>
+        <field name="model">induus.generar_envio</field>
+        <field name="arch" type="xml">
+            <form string="Buscar Precios">
+                <sheet>
+                    <group string="Bultos">
+                        <group>
+                            <field name="num_paquetes" readonly="1"/>
+                        </group>
+
+                        <group>
+                            <button type="object"
+                                    name="buscar_precios"
+                                    class="oe_highlight"
+                                    string="Refrescar precios"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="induus_bulto_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="peso"/>
+                                <field name="largo"/>
+                                <field name="ancho"/>
+                                <field name="alto"/>
+                                <field name="suma_dimensiones"/>
+                                <field name="volumen"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group sring="Agencias">
+                        <field name="agencia_ids" nolabel="1">
+                            <tree create="false" editable="bottom" delete="false" default_order="importe">
+                                <field name="envio_seleccionado" width="40"/>
+                                <field name="imagen_agencia" widget="image_url" img_width="80px;" readonly="1"/>
+                                <field name="nombre_agencia" readonly="1"/>
+                                <field name="num_bultos" readonly="1"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="importe" invisible="1"/>
+                                <field name="iva" invisible="1"/>
+                                <field name="iva_exento" invisible="1"/>
+                                <field name="importe_sin_iva" widget="monetary" readonly="1"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group string="Bultos generados por Genei">
+                        <field name="genei_bulto_ids" nolabel="1">
+                            <tree create="0" edit="0" delete="0">
+                                <field name="peso"/>
+                                <field name="largo"/>
+                                <field name="ancho"/>
+                                <field name="alto"/>
+                                <field name="suma_dimensiones"/>
+                                <field name="volumen"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="crear_envio" string="Crear" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="induus_genei_envio_tree" model="ir.ui.view">
+        <field name="name">induus.genei_envio.tree</field>
+        <field name="model">induus.genei_envio</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0">
+                <field name="imagen_agencia" class="oe_image_small" width="80px" widget="image_url"/>
+                <field name="name"/>
+                <field name="codigo_envio_servicio"/>
+                <field name="id_agencia"/>
+                <field name="sincronizado"/>
+                <field name="resultado_text"/>
+                <field name="codigo_etiqueta" invisible="1"/>
+                <field name="url_etiqueta" widget="url"/>
+                <button name="action_etiqueta" 
+                        type="object" 
+                        string="Actualizar etiqueta"
+                        icon="fa-refresh"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="induus_genei_envio_form" model="ir.ui.view">
+        <field name="name">induus.genei_envio.form</field>
+        <field name="model">induus.genei_envio</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="obtener_codigo_envio" 
+                            type="object" 
+                            attrs="{'invisible': [('name', '=', False)]}"
+                            string="Obtener código seguimiento"/>
+
+                    <button name="action_etiqueta" 
+                            type="object" 
+                            attrs="{'invisible': [('name', '=', False)]}"
+                            string="Obtener etiqueta"/>
+                </header>
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="name"/>
+                            <field name="codigo_envio_servicio"/>
+                            <field name="codigo_seguimiento"/>
+                            <field name="picking_ids" widget="many2many_tags"/>
+                            <field name="sincronizado"/>
+                            <field name="create_date"/>
+                            <field name="resultado_text"/>
+                        </group>
+                        <group>
+                            <field name="fecha_recogida"/>
+                            <field name="hora_recogida_desde"/>
+                            <field name="hora_recogida_hasta"/>
+                            <field name="referencia_cliente"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Agencia">
+                            <field name="id_agencia"/>
+                            <field name="name_agencia"/>
+                            <field name="imagen_agencia" class="oe_image_small" width="80px" widget="image_url"/>
+                        </group>
+                        <group string="Etiqueta" attrs="{'invisible': [('url_etiqueta', '=', False)]}">
+                            <field name="codigo_etiqueta" invisible="1"/>
+                            <field name="url_etiqueta" widget="url"/>
+                        </group>
+                    </group>
+                    <group string="Bultos">
+                        <field name="bulto_ids" nolabel="1">
+                            <tree create="0" edit="0" delete="0">
+                                <field name="peso"/>
+                                <field name="largo"/>
+                                <field name="ancho"/>
+                                <field name="alto"/>
+                                <field name="contenido"/>
+                                <field name="valor"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <group string="Datos remitente">
+                            <field name="nombre_salida"/>
+                            <field name="direccion_salida"/>
+                            <field name="poblacion_salida"/>
+                            <field name="codigos_origen"/>
+                            <field name="iso_pais_salida"/>
+                            <field name="telefono_salida"/>
+                            <field name="email_salida"/>
+                            <field name="contacto_salida"/>
+                            <field name="observaciones_salida"/>
+                        </group>
+                        <group string="Datos destinatario">
+                            <field name="nombre_llegada"/>
+                            <field name="direccion_llegada"/>
+                            <field name="poblacion_llegada"/>
+                            <field name="codigos_destino"/>
+                            <field name="iso_pais_llegada"/>
+                            <field name="telefono_llegada"/>
+                            <field name="email_llegada"/>
+                            <field name="dni_llegada"/>
+                            <field name="contacto_llegada"/>
+                            <field name="observaciones_llegada"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="induus_genei_envio_search" model="ir.ui.view">
+        <field name="name">induus.genei_envio.search</field>
+        <field name="model">induus.genei_envio</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="picking_ids" string="Albarán" filter_domain="[('picking_ids.name', 'ilike', self)]"/>
+                <field name="codigo_envio_servicio"/>
+            </search>
+        </field>
+    </record>
+</odoo>

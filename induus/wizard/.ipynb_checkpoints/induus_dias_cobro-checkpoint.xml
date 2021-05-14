@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="induus_dias_cobro_form" model="ir.ui.view">
+        <field name="name">induus.dias_cobro.form</field>
+        <field name="model">induus.dias_cobro</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="fecha_inicio"/>
+                        </group>
+                        <group>
+                            <field name="fecha_fin"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="partner_id"/>
+                    </group>
+                    <group>
+                        <button type="object"
+                                name="buscar_pedidos"
+                                class="oe_highlight"
+                                string="Buscar pedidos"/>
+                    </group>
+
+                    <group string="Pedidos">
+                        <field name="linea_ids" nolabel="1" default_focus="1" readonly="1">
+                            <tree>
+                                <field name="sale_order_id"/>
+                                <field name="partner_id"/>
+                                <field name="pago_venta"/>
+                                <field name="pago_compra"/>
+                                <field name="dias"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <act_window id="induus_dias_cobro_action"
+                name="Días cobro"
+                res_model="induus.dias_cobro"
+                view_mode="form"/>
+
+    <menuitem id="menu_induus_dias_cobro"
+              action="induus_dias_cobro_action"
+              parent="sale.sale_menu_root"
+              sequence="30"/>
+</odoo>

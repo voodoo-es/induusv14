@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="documents_folder_factura_cliente" model="documents.folder">
+        <field name="name">Facturas Cliente</field>
+        <field name="parent_folder_id" ref="documents.documents_finance_folder"/>
+    </record>
+
+    <record id="documents_folder_factura_proveedor" model="documents.folder">
+        <field name="name">Facturas Proveedor</field>
+        <field name="parent_folder_id" ref="documents.documents_finance_folder"/>
+    </record>
+
+    <record id="documents_folder_nota_credito_cliente" model="documents.folder">
+        <field name="name">Nota Crédito Cliente</field>
+        <field name="parent_folder_id" ref="documents.documents_finance_folder"/>
+    </record>
+
+    <record id="documents_folder_nota_credito_proveedor" model="documents.folder">
+        <field name="name">Nota Crédito Proveedor</field>
+        <field name="parent_folder_id" ref="documents.documents_finance_folder"/>
+    </record>
+    
+    <record id="documents_folder_gastos" model="documents.folder">
+        <field name="name">Gastos</field>
+    </record>
+
+    <record id="documents_facet_documentos" model="documents.facet">
+        <field name="name">Documentos</field>
+        <field name="folder_id" ref="documents.documents_finance_folder"/>
+    </record>
+
+    <record id="documents_tag_factura_cliente" model="documents.tag">
+        <field name="name">Facturas Clientes</field>
+        <field name="facet_id" ref="induus.documents_facet_documentos"/>
+    </record>
+
+    <record id="documents_tag_factura_proveedor" model="documents.tag">
+        <field name="name">Facturas Proveedor</field>
+        <field name="facet_id" ref="induus.documents_facet_documentos"/>
+    </record>
+
+    <record id="documents_tag_nota_credito_cliente" model="documents.tag">
+        <field name="name">Abonos Cliente</field>
+        <field name="facet_id" ref="induus.documents_facet_documentos"/>
+    </record>
+
+    <record id="documents_tag_nota_credito_proveedor" model="documents.tag">
+        <field name="name">Abonos Proveedor</field>
+        <field name="facet_id" ref="induus.documents_facet_documentos"/>
+    </record>
+
+    <record id="documents_tag_asientos" model="documents.tag">
+        <field name="name">Asientos</field>
+        <field name="facet_id" ref="induus.documents_facet_documentos"/>
+    </record>
+
+    <record id="documents_tag_otros" model="documents.tag">
+        <field name="name">Otros</field>
+        <field name="facet_id" ref="induus.documents_facet_documentos"/>
+    </record>
+
+    <record id="documents_facet_trimestre" model="documents.facet">
+        <field name="name">Trimestre</field>
+        <field name="folder_id" ref="documents.documents_finance_folder"/>
+    </record>
+
+    <record id="documents_tag_1trimestre" model="documents.tag">
+        <field name="name">1º Trimestre</field>
+        <field name="facet_id" ref="induus.documents_facet_trimestre"/>
+    </record>
+
+    <record id="documents_tag_2trimestre" model="documents.tag">
+        <field name="name">2º Trimestre</field>
+        <field name="facet_id" ref="induus.documents_facet_trimestre"/>
+    </record>
+
+    <record id="documents_tag_3trimestre" model="documents.tag">
+        <field name="name">3º Trimestre</field>
+        <field name="facet_id" ref="induus.documents_facet_trimestre"/>
+    </record>
+
+    <record id="documents_tag_4trimestre" model="documents.tag">
+        <field name="name">4º Trimestre</field>
+        <field name="facet_id" ref="induus.documents_facet_trimestre"/>
+    </record>
+
+    <record id="documents_facet_mes" model="documents.facet">
+        <field name="name">Mes</field>
+        <field name="folder_id" ref="documents.documents_finance_folder"/>
+    </record>
+
+    <record id="documents_tag_enero" model="documents.tag">
+        <field name="sequence">1</field>
+        <field name="name">Enero</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_febrero" model="documents.tag">
+        <field name="sequence">2</field>
+        <field name="name">Febrero</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_marzo" model="documents.tag">
+        <field name="sequence">3</field>
+        <field name="name">Marzo</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_abril" model="documents.tag">
+        <field name="sequence">4</field>
+        <field name="name">Abril</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_mayo" model="documents.tag">
+        <field name="sequence">5</field>
+        <field name="name">Mayo</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_junio" model="documents.tag">
+        <field name="sequence">6</field>
+        <field name="name">Junio</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_julio" model="documents.tag">
+        <field name="sequence">7</field>
+        <field name="name">Julio</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_agosto" model="documents.tag">
+        <field name="sequence">8</field>
+        <field name="name">Agosto</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_septiembre" model="documents.tag">
+        <field name="sequence">9</field>
+        <field name="name">Septiembre</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_octubre" model="documents.tag">
+        <field name="sequence">10</field>
+        <field name="name">Octubre</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_noviembre" model="documents.tag">
+        <field name="sequence">11</field>
+        <field name="name">Noviembre</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+
+    <record id="documents_tag_diciembre" model="documents.tag">
+        <field name="sequence">12</field>
+        <field name="name">Diciembre</field>
+        <field name="facet_id" ref="induus.documents_facet_mes"/>
+    </record>
+    
+    <record id="documents_gasto_Fiscal_year_folder" model="documents.facet">
+        <field name="name">Año</field>
+        <field name="folder_id" ref="induus.documents_folder_gastos"/>
+    </record>
+    
+    <record id="documents_facet_gasto_trimestre" model="documents.facet">
+        <field name="name">Trimestre</field>
+        <field name="folder_id" ref="induus.documents_folder_gastos"/>
+    </record>
+
+    <record id="documents_tag_gasto_1trimestre" model="documents.tag">
+        <field name="name">1º Trimestre</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_trimestre"/>
+    </record>
+
+    <record id="documents_tag_gasto_2trimestre" model="documents.tag">
+        <field name="name">2º Trimestre</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_trimestre"/>
+    </record>
+
+    <record id="documents_tag_gasto_3trimestre" model="documents.tag">
+        <field name="name">3º Trimestre</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_trimestre"/>
+    </record>
+
+    <record id="documents_tag_gasto_4trimestre" model="documents.tag">
+        <field name="name">4º Trimestre</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_trimestre"/>
+    </record>
+
+    <record id="documents_facet_gasto_mes" model="documents.facet">
+        <field name="name">Mes</field>
+        <field name="folder_id" ref="induus.documents_folder_gastos"/>
+    </record>
+
+    <record id="documents_tag_gasto_enero" model="documents.tag">
+        <field name="sequence">1</field>
+        <field name="name">Enero</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_febrero" model="documents.tag">
+        <field name="sequence">2</field>
+        <field name="name">Febrero</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_marzo" model="documents.tag">
+        <field name="sequence">3</field>
+        <field name="name">Marzo</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_abril" model="documents.tag">
+        <field name="sequence">4</field>
+        <field name="name">Abril</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_mayo" model="documents.tag">
+        <field name="sequence">5</field>
+        <field name="name">Mayo</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_junio" model="documents.tag">
+        <field name="sequence">6</field>
+        <field name="name">Junio</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_julio" model="documents.tag">
+        <field name="sequence">7</field>
+        <field name="name">Julio</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_agosto" model="documents.tag">
+        <field name="sequence">8</field>
+        <field name="name">Agosto</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_septiembre" model="documents.tag">
+        <field name="sequence">9</field>
+        <field name="name">Septiembre</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_octubre" model="documents.tag">
+        <field name="sequence">10</field>
+        <field name="name">Octubre</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_noviembre" model="documents.tag">
+        <field name="sequence">11</field>
+        <field name="name">Noviembre</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+
+    <record id="documents_tag_gasto_diciembre" model="documents.tag">
+        <field name="sequence">12</field>
+        <field name="name">Diciembre</field>
+        <field name="facet_id" ref="induus.documents_facet_gasto_mes"/>
+    </record>
+</odoo>

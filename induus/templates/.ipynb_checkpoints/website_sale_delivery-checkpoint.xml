@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payment_delivery_methods" inherit_id="website_sale_delivery.payment_delivery_methods">
+        <xpath expr="//span" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//span[2]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+
+        <xpath expr="//t[@t-if='delivery.website_description']" position="after">
+            <div t-esc="website_sale_order.delay_website(delivery.id)"/>
+        </xpath>
+    </template>
+
+    <template id="cart_delivery" inherit_id="website_sale_delivery.cart_delivery">
+        <xpath expr="//span[@t-field='website_sale_order.amount_delivery']" position="replace">
+            <span t-field="website_sale_order.amount_delivery_taxincl"
+                  style="white-space: nowrap;"
+                  t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
+        </xpath>
+    </template>
+</odoo>
