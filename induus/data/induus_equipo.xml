@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_equipo_induus" model="ir.sequence">
+        <field name="name">Equipo</field>
+        <field name="code">induus.equipo</field>
+        <field name="prefix">EQ</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>

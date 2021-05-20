@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Emails"
+              id="emails_main"
+              web_icon="induus,static/src/img/emailtracking.jpg"
+              sequence="1"/>
+
+<!--     <menuitem id="menu_mail_tracking_email"
+              action="mail_tracking.action_view_mail_tracking_email"
+              parent="induus.emails_main"/> -->
+</odoo>

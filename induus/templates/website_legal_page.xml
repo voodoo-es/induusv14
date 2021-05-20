@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="privacy-policy" inherit_id="website_legal_page.privacy-policy">
+        <xpath expr="//div[@id='wrap']" position="replace">
+            <div id="wrap">
+                <div class="oe_structure">
+                    <section data-snippet-id="title">
+                        <h1 class="text-center mt32">
+                            Política de cookies
+                        </h1>
+                    </section>
+                </div>
+                <div class="oe_structure">
+                    <section class="s_text_block">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 mb16 mt16">
+                                    <p>
+                                        Una Cookie es un fichero que se descarga en su ordenador al acceder a
+                                        determinadas páginas web. Las cookies permiten a una página web, entre otras
+                                        cosas, almacenar y recuperar información sobre los hábitos de navegación de
+                                        un usuario o de su equipo y, dependiendo de la información que contenga y de
+                                        la forma en que utilice su equipo, pueden utilizarse para reconocer al usuario.
+                                    </p>
+                                    <p>
+                                        Las cookies son esenciales para el funcionamiento de internet, aportando
+                                        innumerables ventajas en la prestación de servicios interactivos,
+                                        facilitándole la navegación y usabilidad de nuestra web.
+                                    </p>
+                                    <p>
+                                        La información que le proporcionamos a continuación, le ayudará a comprender
+                                        los diferentes tipos de cookies:
+
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" colspan="3">TIPOS DE COOKIES</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="2">
+                                                        SEGÚN LA ENTIDAD QUE LAS GESTIONE
+                                                    </td>
+                                                    <td>
+                                                        Cookies propias
+                                                    </td>
+                                                    <td>
+                                                        Son aquellas que se recaban por el propio editor para prestar
+                                                        el servicio solicitado por el usuario.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cookies de tercero
+                                                    </td>
+                                                    <td>
+                                                        Son aquellas que son recabadas y gestionadas por un tercero,
+                                                        estas no se pueden considerar propias.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td rowspan="2">
+                                                        SEGÚN EL PLAZO DE TIEMPO QUE PERMANEZCAN ACTIVADAS
+                                                    </td>
+                                                    <td>
+                                                        Cookies de sesión
+                                                    </td>
+                                                    <td>
+                                                        Recaban datos mientras el usuario navega por la red con la
+                                                        finalidad de prestar el servicio solicitado.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cookies persistentes
+                                                    </td>
+                                                    <td>
+                                                        Se almacenan en el terminal y la información obtenida,
+                                                        será utilizada por el responsable de la cookie con la
+                                                        finalidad de prestar el servicio solicitado.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td rowspan="5">
+                                                        SEGÚN SU FINALIDAD
+                                                    </td>
+                                                    <td>
+                                                        Cookies técnicas
+                                                    </td>
+                                                    <td>
+                                                        Son las necesarias para la correcta navegación por la web.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cookies de personalización
+                                                    </td>
+                                                    <td>
+                                                        Permiten al usuario las características (idioma) para la
+                                                        navegación por la website
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cookies de análisis
+                                                    </td>
+                                                    <td>
+                                                        Permiten al prestador el análisis vinculado a la navegación
+                                                        realizada por el usuario, con la finalidad de llevar un
+                                                        seguimiento de uso de la página web, así como realizar
+                                                        estadísticas de los contenidos más visitados, número de
+                                                        visitantes, etc.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cookies publicitarias
+                                                    </td>
+                                                    <td>
+                                                        Permiten al editor incluir en la web, espacios publicitarios,
+                                                        según el contenido de la propia web.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cookies de publicidad comportamental
+                                                    </td>
+                                                    <td>
+                                                        Permiten al editor incluir en la página web espacios
+                                                        publicitarios según la información obtenida a través de los
+                                                        hábitos de navegación del usuario.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </p>
+                                    <p>
+                                        Según lo dispuesto en el artículo 22.2 de la Ley 34/2002, de 11 de julio,
+                                        de Servicios de la Sociedad de la Información y de Comercio Electrónico
+                                        (LSSI-CE), THE INDUUS SOLUTIONS SL informa de las cookies utilizadas en
+                                        nuestra website:
+                                        <ul>
+                                            <li>
+                                                <strong>Cookies técnicas</strong>
+                                                <ul>
+                                                    <li>Cookies propias</li>
+                                                    <li>Cookies de tercero</li>
+                                                    <li>Cookies de sesión</li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <strong>Cookies de análisis</strong>
+                                                <ul>
+                                                    <li>Cookies propias</li>
+                                                    <li>Cookies de tercero</li>
+                                                    <li>Cookies de sesión</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </p>
+                                    <p>
+                                        <strong>Google Analytics</strong>: Almacena cookies para poder elaborar
+                                        estadísticas sobre el tráfico y volumen de visitas de esta web. Al utilizar
+                                        este sitio web está consintiendo el tratamiento de información acerca de
+                                        usted por Google. Por tanto, el ejercicio de cualquier derecho en este
+                                        sentido deberá hacerlo comunicando directamente con Google.
+                                    </p>
+                                    <p>
+                                        Las cookies de Google Analytics, se almacenan en servidores ubicados en
+                                        Estados Unidos y se compromete a no compartirla con terceros, excepto en
+                                        los casos en los que sea necesario para el funcionamiento del sistema o
+                                        cuando la ley obligue a tal efecto. Según Google no guarda su dirección IP.
+                                    </p>
+                                    <p>
+                                        Google Inc. es una compañía adherida a “Privacy Shiels” (escudo de privacidad)
+                                        que garantiza que todos los datos transferidos serán tratados con un nivel de
+                                        protección acorde a la normativa europea. Puede consultar información detallada
+                                        a este respecto a través del siguiente enlace:
+                                        <a target="_blank" href="https://support.google.com/analytics/answer/6004245">https://support.google.com/analytics/answer/6004245</a>.
+                                    </p>
+                                    <p>
+                                        Si lo desea puede utilizar el Complemento de inhabilitación para navegadores
+                                        de Google Analytics a través de cuyas instrucciones pueden rechazarse las
+                                        cookies analíticas de dicho servicio en todos los navegadores. Puede consultar
+                                        más información al respecto en el siguiente enlace:
+                                        <a target="_blank" href="https://tools.google.com/dlpage/gaoptout">https://tools.google.com/dlpage/gaoptout</a>
+                                    </p>
+                                    <p>
+                                        Asimismo, THE INDUUS SOLUTIONS SL informa al usuario de que tiene la
+                                        posibilidad de configurar su navegador de modo que se le informe de la
+                                        recepción de cookies, pudiendo, si así lo desea, impedir que sean instaladas
+                                        en su disco duro.
+                                    </p>
+                                    <p>
+                                        A continuación le proporcionamos los enlaces de diversos navegadores, a
+                                        través de los cuales podrá realizar dicha configuración:
+                                        <ul>
+                                            <li>
+                                                <strong>Firefox desde aquí:</strong>
+                                                <a target="_blank" href="http://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-que-lossitios-we">http://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-que-lossitios-we</a>
+                                            </li>
+                                            <li>
+                                                <strong>Chrome desde aquí</strong>
+                                                <a target="blank" href="https://support.google.com/chrome/answer/95647?hl=es">https://support.google.com/chrome/answer/95647?hl=es</a>
+                                            </li>
+                                            <li>
+                                                <strong>Explorer desde aquí:</strong>
+                                                <a target="_blank" href="https://support.microsoft.com/es-es/help/17442/windows-internet-explorer-delete-manage-cookies#ie=ie-10">https://support.microsoft.com/es-es/help/17442/windows-internet-explorer-delete-manage-cookies#ie=ie-10</a>
+                                            </li>
+                                            <li>
+                                                <strong>Safari desde aquí:</strong>
+                                                <a target="_blank" href="https://support.apple.com/es-es/guide/safari/sfri11471/mac">https://support.apple.com/es-es/guide/safari/sfri11471/mac</a>
+                                            </li>
+                                            <li>
+                                                <strong>Opera desde aquí:</strong>
+                                                <a target="blank" href="https://help.opera.com/en/latest/web-preferences/#cookies">https://help.opera.com/en/latest/web-preferences/#cookies</a>
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

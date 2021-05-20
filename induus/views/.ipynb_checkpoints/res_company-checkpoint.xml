@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form" model="ir.ui.view">
+        <field name="name">res.company.form.induus</field>
+        <field name="model">res.company</field>
+        <field ref="base.view_company_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence']" position="after">
+                <field name="secuencia_productos"/>
+            </xpath>
+            
+            <xpath expr="//notebook[1]" position="inside">
+                <page name="genei" string="Genei">
+                    <group string="Credenciales">
+                        <group>
+                            <field name="genei_usuario"/>
+                        </group>
+                        <group>
+                            <field name="genei_pass" password="True"/>
+                        </group>
+                    </group>
+
+                    <group string="Datos remitente">
+                        <group>
+                            <field name="genei_nombre"/>
+                            <field name="genei_contacto"/>
+                            <field name="genei_direccion"/>
+                            <field name="genei_codigos_origen"/>
+                            <field name="genei_telefono"/>
+                        </group>
+                        <group>
+                            <field name="genei_poblacion"/>
+                            <field name="genei_provincia"/>
+                            <field name="genei_iso_pais"/>
+                            <field name="genei_email"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

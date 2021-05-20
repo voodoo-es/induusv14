@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bank_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.form.induus</field>
+        <field name="model">account.bank.statement</field>
+        <field ref="account.view_bank_statement_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header[1]" position="inside">
+                <button name="rellenar_empresas_lineas" 
+                        string="Rellenar empresas" 
+                        type="object" 
+                        class="oe_highlight" 
+                        attrs="{'invisible':['|','|',('all_lines_reconciled','=',True),('line_ids','=',[]),('state', '!=', 'open')]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

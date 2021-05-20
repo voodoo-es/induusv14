@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_inventario_previsto_tree" model="ir.ui.view">
+        <field name="name">product.product.inventario_previsto.tree.induus</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="default_code"/>
+                <field name="name"/>
+                <field name="stock_previsto"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="standard_price" widget="monetary"/>
+                <field name="total_previsto" widget="monetary"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

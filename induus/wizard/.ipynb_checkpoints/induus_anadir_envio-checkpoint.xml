@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="induus_anadir_envio_form" model="ir.ui.view">
+        <field name="name">induus.anadir_envio.form</field>
+        <field name="model">induus.anadir_envio</field>
+        <field name="arch" type="xml">
+            <form string="Añadir Precios">
+                <sheet>
+                    <group string="Envios en Odoo">
+                        <field name="envio_ids"
+                               nolabel="1"
+                               widget="many2many_tags"
+                               options="{'no_create':True, 'no_create_edit': True}"/>
+                        <button name="anadir_envio_existente" string="Añadir" type="object" class="btn-primary"/>
+                    </group>
+                    <hr/>
+                    <group string="Buscar envíos en Genei">
+                        <field name="company_id" invisible="1"/>
+                        <group>
+                            <field name="fecha_inicio"/>
+                        </group>
+                        <group>
+                            <field name="fecha_fin"/>
+                        </group>
+                        <group>
+                            <button name="buscar_envios" string="Buscar" type="object" class="btn-primary"/>
+                        </group>
+                    </group>
+                    <h5>Envíos</h5>
+                    <group>
+                        <field name="envio_genei_ids" nolabel="1">
+                            <tree editable="bottom" create="0">
+                                <field name="para_importar"/>
+                                <field name="codigo_envio" readonly="1"/>
+                                <field name="direccion_llegada" readonly="1"/>
+                                <field name="direccion_salida" readonly="1"/>
+                                <field name="fecha_hora_creacion" readonly="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="importe_total" readonly="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <button name="anadir_envio_desde_genei" string="Añadir" type="object" class="btn-primary"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

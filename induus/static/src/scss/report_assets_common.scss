@@ -1,0 +1,26 @@
+div.address.row{
+    display: flex;
+}
+
+.albaran_report{
+    background-color: gray('200');
+}
+
+table.o_bg_gris thead tr th{
+    background-color:#e9ecef;
+}
+
+table.table-center{
+    th, td{
+        text-align:center!important;
+    }
+}
+
+.footer{
+    padding-top: 1rem;
+    font-size:0.7em;
+}
+
+.o_background_footer ul{
+    padding-bottom:0;
+}

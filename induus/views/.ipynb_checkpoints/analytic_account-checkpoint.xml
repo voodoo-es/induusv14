@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_analytic_line_form" model="ir.ui.view">
+        <field name="name">account.analytic.line.form.induus</field>
+        <field name="model">account.analytic.line</field>
+        <field ref="analytic.view_account_analytic_line_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]" position="inside">
+                <group name="order" string="Prespuesto/Pedido Venta">
+                    <field name="order_confirmation_date" readonly="1"/>
+                    <field name="order_id" readonly="1"/>
+                    <field name="order_partner_id" readonly="1"/>
+                    <field name="order_client_order_ref" readonly="1"/>
+                </group>
+
+                <group name="invoice" string="Factura">
+                    <field name="invoice_date_invoice" readonly="1"/>
+                    <field name="invoice_number" readonly="1"/>
+                    <field name="invoice_amount_total" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_analytic_line_tree" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.induus</field>
+        <field name="model">account.analytic.line</field>
+        <field ref="analytic.view_account_analytic_line_tree" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="field[@name='amount']" position="after">
+                <field name="order_confirmation_date" readonly="1"/>
+                <field name="order_id" readonly="1"/>
+                <field name="order_partner_id" readonly="1"/>
+                <field name="order_client_order_ref" readonly="1"/>
+                <field name="invoice_date_invoice" readonly="1"/>
+                <field name="invoice_number" readonly="1"/>
+                <field name="invoice_amount_total" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_analytic_account_hojas_margenes_tree" model="ir.ui.view">
+        <field name="name">account.analytic.account.hojas.margenes.tree.induus</field>
+        <field name="model">account.analytic.account</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="margen&lt;4">
+                <field name="invoice_date_invoice"/>
+                <field name="name"/>
+                <field name="account_analytic_url" text="Coste/Beneficio" widget="url"/>
+                <field name="account_invoice_url" text="Factura" widget="url"/>
+                <field name="partner_id"/>
+                <field name="invoice_name"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="coste_margenes" sum="Total"/>
+                <field name="venta_margenes" sum="Total"/>
+                <field name="beneficio" sum="Total"/>
+                <field name="margen" avg="Margen"/>
+                <field name="invoice_date_due"/>
+                <field name="invoice_state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_account_analytic_account_hojas_margenes_tree" model="ir.actions.act_window">
+        <field name="name">Hoja de Márgenes</field>
+        <field name="res_model">account.analytic.account</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('invoice_id', '!=', False)]</field>
+        <field name="context">{'group_by': 'invoice_date_invoice'}</field>
+        <field name="view_id" ref="account_analytic_account_hojas_margenes_tree"/>
+    </record>
+
+    <menuitem action="action_account_analytic_account_hojas_margenes_tree"
+              id="menu_account_analytic_account_hojas_margenes_tree"
+              name="Hoja de Margenes"
+              parent="account_accountant.menu_accounting"
+              groups="account.group_account_user"
+              sequence="5"/>
+</odoo>

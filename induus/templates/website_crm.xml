@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="contactus_form" inherit_id="website_crm.contactus_form" priority="100">
+        <xpath expr="//form[1]/div[4]" position="after">
+            <div class="form-group row form-field o_website_form_required_custom">
+                <label class="col-lg-3 col-md-4 col-form-label" for="country_id">País</label>
+                <div class="col-lg-7 col-md-8">
+                    <select class="form-control o_website_form_input" required="" name="country_id">
+                        <option value="">Seleccione</option>
+                        <t t-set="countries" t-value="request.env['res.country'].search([])"/>
+                        <t t-foreach="countries" t-as="country">
+                            <option t-att-value="country.id"><t t-esc="country.name"/></option>
+                        </t>
+                    </select>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//label[@for='partner_name']" position="replace">
+            <label class="col-lg-3 col-md-4 col-form-label" for="empresa">Compañía</label>
+        </xpath>
+
+        <xpath expr="//input[@name='partner_name']" position="replace">
+            <input type="text"
+                   class="form-control o_website_form_input"
+                   name="empresa"
+                   required=""
+                   t-att-value="request.params.get('empresa', '')"/>
+        </xpath>
+
+        <xpath expr="//textarea[@name='description']" position="replace">
+            <textarea class="form-control o_website_form_input" name="description" required=""><t t-esc="request.params.get('description', '')"/></textarea>
+        </xpath>
+
+        <xpath expr="//form/div/div/span[@id='o_website_form_result']/../.." position="before">
+            <div class="form-group row form-field o_website_form_required_custom" style="margin-top:-0.6rem;line-height:1.2em;">
+                <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               value="accepted"
+                               id="cntc_newletter"
+                               name="cntc_newletter"
+                               class="o_website_form_input form-check-input"/>
+                        <label class="form-check-label" for="cntc_newletter">
+                            Acepto recibir <a href="/legal6" data-original-title="" title="" aria-describedby="tooltip754767">Publicidad e información promocional</a>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

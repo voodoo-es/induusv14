@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mail_act_oferta_comercial" model="mail.activity.type">
+        <field name="name">Seguimiento oferta comercial</field>
+        <field name="icon">fa-envelope</field>
+        <field name="seguimiento_comercial">True</field>
+        <field name="delay_count">7</field>
+        <field name="res_model_id" ref="sale.model_sale_order"/>
+    </record>
+
+    <record id="mail_act_oferta_cliente" model="mail.activity.type">
+        <field name="name">Seguimiento oferta cliente</field>
+        <field name="icon">fa-envelope</field>
+        <field name="force_next">True</field>
+        <field name="default_next_type_id" ref="induus.mail_act_oferta_comercial"/>
+        <field name="seguimiento_cliente">True</field>
+        <field name="delay_count">15</field>
+        <field name="res_model_id" ref="sale.model_sale_order"/>
+    </record>
+
+    <record id="mail_act_email_enviado_oferta_comercial" model="mail.activity.type">
+        <field name="name">Email seguimiento oferta comercial enviado</field>
+        <field name="icon">fa-envelope</field>
+        <field name="delay_count">0</field>
+        <field name="res_model_id" ref="sale.model_sale_order"/>
+    </record>
+
+<!--     <record id="mail_act_fail_email" model="mail.activity.type">
+        <field name="name">Email fallido</field>
+        <field name="icon">fa-envelope</field>
+        <field name="decoration-type">danger</field>
+    </record> -->
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payment_tokens_list" inherit_id="payment.payment_tokens_list">
+        <xpath expr="//div[@t-if='back_button_txt']" position="before">
+            <div t-if="website_sale_order" class="mt-4 mb-2">
+                <div class="float-right">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               name="subscription"
+                               t-att-data-order_id="website_sale_order.id"
+                               id="subscription_order"
+                               style="margin-top: 0.4rem;"/>
+                        <label class="form-check-label mt-0" for="subscription_order">
+                            Deseo recibir información sobre todas las novedades y promociones
+                        </label>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

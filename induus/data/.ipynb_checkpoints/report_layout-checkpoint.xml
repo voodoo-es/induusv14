@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="report_layout_induus" model="report.layout">
+        <field name="view_id" ref="induus.external_layout_induus"/>
+        <field name="image">/induus/static/img/preview_induus.png</field>
+        <field name="pdf">/induus/static/pdf/preview_induus.pdf</field>
+    </record>
+</odoo>

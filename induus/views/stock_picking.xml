@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.induus</field>
+        <field name="model">stock.picking</field>
+        <field ref="stock.view_picking_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_picking_group_id_tree"
+                        class="oe_stat_button"
+                        icon="fa-truck"
+                        string=""
+                        attrs="{'invisible':[('group_id', '=', False)]}"
+                        type="object"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="after">
+                <field name="ref_proveedor"
+                       readonly="1"
+                       attrs="{'column_invisible': [('parent.picking_type_code', '!=', 'incoming')]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='scheduled_date']" position="before">
+                <field name="no_facturar_auto"/>
+            </xpath>
+
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="sale_id" attrs="{'invisible': [('sale_id', '=', False)]}"/>
+                <field name="purchase_id" attrs="{'invisible': [('purchase_id', '=', False)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_ids_without_package']/tree[1]/field[@name='product_id']" position="before">
+                <field name="imprimir_etiqueta" string="Imprimir" readonly="0"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_ids_without_package']/tree[1]/field[@name='product_id']" position="after">
+                <field name="ref_cliente"
+                       readonly="1"
+                       attrs="{'column_invisible': [('parent.picking_type_code', '!=', 'outgoing')]}"/>
+                <field name="name"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_ids_without_package']/tree[1]" position="inside">
+                <button name="action_toggle_imprimir_etiqueta"
+                        string="Imprimir etiqueta"
+                        type="object"
+                        icon="fa-print"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page name="gene_envio" string="Envíos">
+                    <group>
+                        <group>
+                            <button type="object"
+                                    name="crear_recogida_desde_induus"
+                                    class="oe_highlight"
+                                    attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"
+                                    string="CLIENTE ENVÍO"/>
+
+                            <button type="object"
+                                    name="crear_recogida_desde_cliente"
+                                    class="oe_highlight"
+                                    attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}"
+                                    style="background-color:#341f97;border-color:#341f97;"
+                                    string="RECOGIDA PROVEEDOR"/>
+                        </group>
+                        <group>
+                            <button type="object"
+                                    name="anadir_envio"
+                                    class="oe_highlight"
+                                    style="background-color:#2e86de;border-color:#2e86de;"
+                                    string="AÑADIR ENVÍO"/>
+                        </group>
+                    </group>
+                    <group string="Envíos">
+                        <field name="gene_envio_ids" nolabel="1">
+                            <tree create="false" editable="false">
+                                <field name="imagen_agencia" class="oe_image_small" width="80px" widget="image_url"/>
+                                <field name="name"/>
+                                <field name="codigo_envio_servicio"/>
+                                <field name="id_agencia"/>
+                                <field name="sincronizado"/>
+                                <field name="resultado_text"/>
+                                <field name="create_date" readonly="1"/>
+                                <field name="codigo_etiqueta" invisible="1"/>
+                                <field name="url_etiqueta" widget="url"/>
+                                <button name="action_etiqueta" 
+                                        type="object" 
+                                        string="Actualizar etiqueta"
+                                        icon="fa-refresh"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Bulto">
+                        <group>
+                            <field name="peso"/>
+                            <field name="largo"/>
+                        </group>
+                        <group>
+                            <field name="ancho"/>
+                            <field name="alto"/>
+                        </group>
+                    </group>
+                    <group string="Datos">
+                        <group string="Induus">
+                            <field name="genei_nombre_company"/>
+                            <field name="genei_contacto_company"/>
+                            <field name="genei_telefono_company"/>
+                            <field name="genei_direccion_company"/>
+                            <field name="genei_email_company"/>
+                            <field name="genei_codigos_origen_company"/>
+                            <field name="genei_poblacion_company"/>
+                            <field name="genei_provincia_company"/>
+                            <field name="genei_iso_pais_company"/>
+                            <field name="genei_dni_company"/>
+                        </group>
+
+                        <group string="Cliente">
+                            <field name="genei_nombre_cliente"/>
+                            <field name="genei_contacto_cliente"/>
+                            <field name="genei_telefono_cliente"/>
+                            <field name="genei_direccion_cliente"/>
+                            <field name="genei_email_cliente"/>
+                            <field name="genei_codigos_origen_cliente"/>
+                            <field name="genei_poblacion_cliente"/>
+                            <field name="genei_provincia_cliente"/>
+                            <field name="genei_iso_pais_cliente"/>
+                            <field name="genei_dni_cliente"/>
+                            <field name="ref_cliente_sale_order"/>
+                        </group>
+
+                        <group string="Proveedor" attrs="{'invisible': [('purchase_id', '=', False)]}">
+                            <field name="genei_nombre_proveedor"/>
+                            <field name="genei_contacto_proveedor"/>
+                            <field name="genei_telefono_proveedor"/>
+                            <field name="genei_direccion_proveedor"/>
+                            <field name="genei_email_proveedor"/>
+                            <field name="genei_codigos_origen_proveedor"/>
+                            <field name="genei_poblacion_proveedor"/>
+                            <field name="genei_provincia_proveedor"/>
+                            <field name="genei_iso_pais_proveedor"/>
+                            <field name="genei_dni_proveedor"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_invoice" model="ir.ui.view">
+        <field name="name">stock_picking_invoice_link.stock.picking.form.induus</field>
+        <field name="model">stock.picking</field>
+        <field ref="stock_picking_invoice_link.view_picking_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_ids']" position="after">
+                <field name="ref_cliente_sale_order"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_internal_search" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search.induus</field>
+        <field name="model">stock.picking</field>
+        <field ref="stock.view_picking_internal_search" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="gene_envio_ids" string="Envío" filter_domain="[('gene_envio_ids.name', 'ilike', self)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_genei_envio" model="ir.actions.act_window">
+        <field name="name">Envíos (Genei)</field>
+        <field name="res_model">induus.genei_envio</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="genei_envio_menu"
+              name="Envíos (Genei)"
+              parent="stock.menu_stock_warehouse_mgmt"
+              sequence="6"
+              action="action_genei_envio"/>
+</odoo>

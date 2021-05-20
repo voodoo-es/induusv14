@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="contact_name" inherit_id="base.contact_name">
+        <xpath expr="//t[@t-if='not object.name and object.parent_name']" position="replace">
+            <t t-if="not object.name and object.parent_id">
+                <t t-if="object.type == 'invoice' and object.parent_id.parent_id">
+                    <span itemprop="name" t-esc="object.parent_id.display_name"/>
+                </t>
+                <t t-else="">
+                    <span itemprop="name" t-esc="object.parent_name"/>
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

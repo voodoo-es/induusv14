@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="induus_equipo_tree_action" model="ir.actions.act_window">
+        <field name="name">Equipos</field>
+        <field name="res_model">induus.equipo</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="induus_equipo_form" model="ir.ui.view">
+        <field name="name">induus.equipo.form</field>
+        <field name="model">induus.equipo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="codigo_induus" readonly="1"/>
+                            </h1>
+                        </div>
+                    </group>
+                    <group>
+                        <field name="name"/>
+                        <field name="descripcion"/>
+                        <field name="serie"/>
+                        <field name="referencia"/>
+                        <field name="serial"/>
+                        <field name="eme"/>
+                    </group>
+                    <notebook>
+                        <page string="Ventas">
+                            <group>
+                                <field name="sale_order_ids" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="induus_equipo_tree" model="ir.ui.view">
+        <field name="name">induus.equipo.tree</field>
+        <field name="model">induus.equipo</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="codigo_induus"/>
+                <field name="name"/>
+                <field name="descripcion"/>
+                <field name="serie"/>
+                <field name="referencia"/>
+                <field name="serial"/>
+                <field name="eme"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="induus_equipo_search" model="ir.ui.view">
+        <field name="name">induus.equipo.search</field>
+        <field name="model">induus.equipo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="codigo_induus"/>
+                <field name="name"/>
+                <field name="descripcion"/>
+                <field name="serie"/>
+                <field name="referencia"/>
+                <field name="serial"/>
+                <field name="eme"/>
+                <group expand="0" string="Group By">
+                    <filter string="Cliente" name="group_by_cliente" domain="[]" context="{'group_by':'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+<!--     <record id="induus_equipo_detalle_action" model="ir.actions.act_window">
+        <field name="name">Detalle equipos</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="domain">[('equipo_id', '!=', False)]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="detalle_equipo_tree"/>
+    </record> -->
+
+    <menuitem id="menu_induus_equipo_main"
+              name="Equipos"
+              parent="sale.sale_menu_root"
+              sequence="6"/>
+
+    <menuitem id="menu_induus_equipo"
+              action="induus_equipo_tree_action"
+              name="Equipos"
+              parent="induus.menu_induus_equipo_main"
+              sequence="5"/>
+
+<!--     <menuitem id="menu_induus_equipo_detalle"
+              action="induus_equipo_detalle_action"
+              name="Detalle equipos"
+              parent="induus.menu_induus_equipo_main"
+              sequence="10"/> -->
+</odoo>

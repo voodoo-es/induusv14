@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="induus_plantilla_proyecto_editor_form" model="ir.ui.view">
+        <field name="name">induus.plantilla_proyecto_editor.form</field>
+        <field name="model">induus.plantilla_proyecto_editor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="editor"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="induus_plantilla_proyecto_editor_tree" model="ir.ui.view">
+        <field name="name">induus.plantilla_proyecto_editor.tree</field>
+        <field name="model">induus.plantilla_proyecto_editor</field>
+        <field name="arch" type="xml">
+            <form>
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="induus_plantilla_proyecto_editor_action"
+                name="Plantillas proyectos editor"
+                res_model="induus.plantilla_proyecto_editor"
+                view_mode="tree,form"/>
+
+    <menuitem id="menu_induus_plantilla_proyecto_editor"
+              action="induus_plantilla_proyecto_editor_action"
+              parent="sale.menu_sale_config"
+              sequence="51"/>
+</odoo>

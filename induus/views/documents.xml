@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="documents.document_action">
+        <field name="view_mode">kanban,tree</field>
+    </record>
+
+<!--         <record id="documents_view_list" model="ir.ui.view">
+            <field name="name">attachments_list.induus</field>
+            <field name="model">ir.attachment</field>
+            <field ref="documents.documents_view_list" name="inherit_id"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="partner_id"/>
+                </xpath>
+            </field>
+        </record> -->
+
+<!--     <record id="documents_view_kanban" model="ir.ui.view">
+        <field name="name">ir.attachment kanban induus</field>
+        <field name="model">ir.attachment</field>
+        <field ref="documents.documents_view_kanban" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="invoice_id"/>
+                <field name="date_invoice"/>
+                <field name="expense_id"/>
+                <field name="date_expense"/>
+            </xpath>
+
+            <xpath expr="//t[@t-if='record.res_model_name.raw_value']" position="after">
+                <t t-if="record.date_invoice.raw_value">
+                    <br/>
+                    <strong>Fecha factura:</strong>
+                    <field name="date_invoice"/>
+                    <br/>
+                </t>
+                <t t-if="record.invoice_reference.raw_value">
+                    <strong>Referencia:</strong>
+                    <field name="invoice_reference"/>
+                    <br/>
+                </t>
+                <t t-if="record.date_expense.raw_value">
+                    <br/>
+                    <strong>Fecha gasto:</strong>
+                    <field name="date_expense"/>
+                    <br/>
+                </t>
+            </xpath>
+        </field>
+    </record> -->
+</odoo>

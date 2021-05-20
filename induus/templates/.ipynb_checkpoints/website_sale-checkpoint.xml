@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="address" inherit_id="website_sale.address">
+        <xpath expr="//form[1]//label[@for='zip']" position="attributes">
+            <attribute name="class">col-form-label</attribute>
+        </xpath>
+
+        <xpath expr="//form[hasclass('checkout_autoformat')]" position="inside">
+            <input type="hidden"
+                   name="zona_id"
+                   t-att-value="'zona_id' in checkout and int(checkout['zona_id']) or request.env.ref('induus.induus_zona_web').id" />
+        </xpath>
+    </template>
+
+    <template id="address_b2b" inherit_id="website_sale.address_b2b">
+        <xpath expr="//label[@for='company_name']" position="attributes">
+            <attribute name="class">col-form-label</attribute>
+        </xpath>
+
+        <xpath expr="//label[@for='vat']" position="attributes">
+            <attribute name="class">col-form-label</attribute>
+        </xpath>
+    </template>
+
+    <template id="product_price" inherit_id="website_sale.product_price" name="Product Price (Induus)">
+        <xpath expr="//span[@t-field='product.list_price']" position="attributes">
+            <attribute name="t-field">product.website_public_price</attribute>
+        </xpath>
+
+        <xpath expr="//h4[1]" position="inside">
+            <span style="font-size:1.2em;">IVA Incluido</span>
+        </xpath>
+
+        <xpath expr="//h4[2]" position="inside">
+            <span style="font-size:1.2em;">IVA Incluido</span>
+        </xpath>
+    </template>
+
+    <template id="products_item" inherit_id="website_sale.products_item">
+        <xpath expr="//div[hasclass('product_price')][1]" position="inside">
+            IVA Incluido
+        </xpath>
+    </template>
+
+    <template id="product" inherit_id="website_sale.product">
+        <xpath expr="//hr[@t-if='product.description_sale'][1]" position="attributes">
+            <attribute name="t-if">product.descripcion_website</attribute>
+        </xpath>
+
+        <xpath expr="//p[@t-field='product.description_sale'][1]" position="attributes">
+            <attribute name="t-field">product.descripcion_website</attribute>
+        </xpath>
+    </template>
+
+    <template id="payment_confirmation_status" inherit_id="website_sale.payment_confirmation_status">
+        <xpath expr="//t[@t-raw='payment_tx_id.acquirer_id.post_msg']" position="replace">
+            <t t-raw="payment_tx_id.acquirer_id.post_msg.replace('PR19xxxx', order.name)"/>
+        </xpath>
+    </template>
+
+    <template id="cart_summary" inherit_id="website_sale.cart_summary">
+        <xpath expr="//div[@t-esc='line.product_uom_qty']" position="replace">
+            <div class="text-center" t-esc="int(line.product_uom_qty)"/>
+        </xpath>
+
+        <xpath expr="//table/tbody//td[hasclass('td-price')]" position="replace">
+            <td class="text-center td-price">
+                <span t-field="line.price_reduce_taxinc"
+                      style="white-space: nowrap;"
+                      t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" />
+            </td>
+        </xpath>
+    </template>
+
+    <template id="short_cart_summary" inherit_id="website_sale.short_cart_summary">
+        <xpath expr="//a[@href='/shop/checkout?express=1']" position="attributes">
+            <attribute name="t-if">not hide_checkout_button</attribute>
+            <attribute name="href">/shop/checkout</attribute>
+        </xpath>
+    </template>
+
+    <template id="cart" inherit_id="website_sale.cart">
+        <xpath expr="//a[@href='/shop/checkout?express=1']" position="attributes">
+            <attribute name="href">/shop/checkout</attribute>
+        </xpath>
+    </template>
+
+    <template id="checkout" inherit_id="website_sale.checkout">
+        <xpath expr="//a[@href='/shop/cart']" position="attributes">
+            <attribute name="class">mb32 btn btn-primary</attribute>
+        </xpath>
+
+        <xpath expr="//a[@href='/shop/confirm_order']" position="attributes">
+            <attribute name="class">mb32 btn btn-primary</attribute>
+        </xpath>
+    </template>
+
+    <template id="cart_lines" inherit_id="website_sale.cart_lines">
+        <xpath expr="//span[@t-field='line.price_reduce_taxexcl']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//span[@t-field='line.price_reduce_taxinc']" position="attributes">
+            <attribute name="groups"></attribute>
+        </xpath>
+    </template>
+
+    <template id="products_list" inherit_id="website_sale.products">
+        <xpath expr="//div[@id='oe_structure_website_sale_products_1']" position="after">
+            <div t-if="category"
+                 itemprop="description"
+                 t-field="category.description_top"
+                 class="oe_structure mt16"
+                 id="category_full_description_top"/>
+        </xpath>
+
+        <xpath expr="//div[@id='oe_structure_website_sale_products_2']" position="before">
+            <div t-if="category"
+                 itemprop="description"
+                 t-field="category.description"
+                 class="oe_structure mt16"
+                 id="category_full_description"/>
+        </xpath>
+    </template>
+</odoo>

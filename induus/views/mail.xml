@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="mail_notification_light" inherit_id="mail.mail_notification_light">
+        <xpath expr="//table[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tr[1]/td[1]/span[2]" position="attributes">
+            <attribute name="style">font-size: 44px; font-weight: bold;</attribute>
+        </xpath>
+
+        <xpath expr="//table[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tr[1]/td[1]/span[2]/t[1]" position="replace">
+            <t t-if="record._table == 'account_invoice'" t-esc="record.number or ''"/>
+            <t t-if="record._table != 'account_invoice'" t-esc="message.record_name"/>
+        </xpath>
+
+        <xpath expr="//table[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tr[1]/td[1]/span[1]" position="replace"/>
+        <xpath expr="//table[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tr[1]/td[1]/br[1]" position="replace"/>
+    </template>
+
+    <template id="mail_notification_paynow" inherit_id="mail.mail_notification_paynow">
+        <xpath expr="//table[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tr[1]/td[1]/span[2]" position="attributes">
+            <attribute name="style">font-size: 44px; font-weight: bold;</attribute>
+        </xpath>
+
+        <xpath expr="//table[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tr[1]/td[1]/span[2]/t[1]" position="replace">
+            <t t-if="record._table == 'account_invoice'" t-esc="record.number or ''"/>
+            <t t-if="record._table != 'account_invoice'" t-esc="message.record_name"/>
+        </xpath>
+
+        <xpath expr="//table[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tr[1]/td[1]/span[1]" position="replace"/>
+        <xpath expr="//table[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tr[1]/td[1]/br[1]" position="replace"/>
+
+        <xpath expr="//a[@t-att-href='access_url']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        
+    </template>
+</odoo>
