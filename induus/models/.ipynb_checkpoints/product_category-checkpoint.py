@@ -16,11 +16,11 @@ class ProductCategory(models.Model):
                                        help="Imprime las etiquetas para los productos stocables")
 
 
-# class ProductPublicCategory(models.Model):
-#     _inherit = 'product.public.category'
+class ProductPublicCategory(models.Model):
+    _inherit = 'product.public.category'
 
-#     description_top = fields.Html('Descripción Sitio web (Parte de arriba)')
+    description_top = fields.Html('Descripción Sitio web (Parte de arriba)')
 
-#     def website_url(self):
-#         self.ensure_one()
-#         return slug(self)
+    def website_url(self):
+        self.ensure_one()
+        return slug(self)

@@ -7,7 +7,7 @@
 
         <xpath expr="//div[@name='invoice_date']" position="replace"/>
         <xpath expr="//div[@name='origin']" position="replace"/>
-        <xpath expr="//div[@name='description']" position="before">
+<!--         <xpath expr="//div[@name='description']" position="before">
             <div class="col-auto mw-100 mb-2" t-if="o.date_invoice" name="invoice_date">
                 <strong><t t-if="o.type in ['out_refund']">Fecha abono</t><t t-else="">Invoice Date</t>:</strong>
                 <p class="m-0" t-field="o.date_invoice"/>
@@ -29,17 +29,17 @@
                 <strong>Referencia/Descripción:</strong>
                 <p class="m-0" t-esc="o.name"/>
             </div>
-        </xpath>
+        </xpath> -->
         
-        <xpath expr="//div[@name='description']" position="attributes">
+<!--         <xpath expr="//div[@name='description']" position="attributes">
             <attribute name="style">display:none</attribute>
-        </xpath>
+        </xpath> -->
         
         <xpath expr="//div[@name='reference']/p[1]" position="replace">
             <p class="m-0" t-esc="o.name"/>
         </xpath>
         
-        <xpath expr="//p[@t-if='o.reference']" position="replace">
+<!--         <xpath expr="//p[@t-if='o.reference']" position="replace">
             <div id="qrcode" t-if="(o.partner_id.country_id.code in ['BE', 'AT', 'DE', 'FI', 'NL']) and (o.company_id.qr_code) and (o.currency_id.name == 'EUR') and (o.partner_bank_id.acc_number != False)">
                 <p t-if="(o.partner_bank_id.qr_code_valid)">
                     <strong class="text-center">Scan me with your banking app.</strong><br/><br/>
@@ -49,7 +49,7 @@
                     <strong class="text-center">The SEPA QR Code informations are not set correctly.</strong><br/>
                 </p>
             </div>
-        </xpath>
+        </xpath> -->
 
         <xpath expr="//div[@id='qrcode']" position="replace"/>
 
@@ -105,25 +105,25 @@
             <attribute name="t-attf-class">text-center {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}</attribute>
         </xpath>
 
-        <xpath expr="//table[@name='invoice_line_table']//th[7]" position="attributes">
+<!--         <xpath expr="//table[@name='invoice_line_table']//th[7]" position="attributes">
             <attribute name="class">text-center</attribute>
-        </xpath>
+        </xpath> -->
 
-        <xpath expr="//table[@name='invoice_line_table']//td[7]" position="attributes">
+<!--         <xpath expr="//table[@name='invoice_line_table']//td[7]" position="attributes">
             <attribute name="class">text-center o_price_total</attribute>
         </xpath>
-
+ -->
         <xpath expr="//td[@name='account_invoice_line_name']/span[@t-field='line.name']" position="replace">
             <pre t-raw='line.name.replace("[%s]" % line.product_id.default_code, "").replace("[%s]" % line.referencia_cliente, "").strip()'
                 style="font-family:inherit;font-size:inherit;color:inherit;margin-bottom:0;overflow:hidden;"/>
         </xpath>
 
-        <xpath expr="//p[@t-if='o.payment_term_id']" position="replace">
+<!--         <xpath expr="//p[@t-if='o.payment_term_id']" position="replace">
             <p t-if="o.payment_term_id" style="margin-bottom:0;padding-bottom:0;">
                 <b>Condiciones de pago:</b>
                 <span t-field="o.payment_term_id.note"/>
             </p>
-        </xpath>
+        </xpath> -->
 
         <xpath expr="//table[1]/thead[1]/tr[1]/th[1]" position="before">
             <th class="text-center">Pos.</th>
@@ -170,12 +170,12 @@
             <td style="background-color:#e9ecef;"><t t-esc="lines_group_index + 1"/></td>
         </xpath>
         
-        <xpath expr="//t[@t-foreach='o.invoice_line_ids']" position="attributes">
+<!--         <xpath expr="//t[@t-foreach='o.invoice_line_ids']" position="attributes">
             <attribute name="t-foreach">lines_grouped</attribute>
             <attribute name="t-as">lines_group</attribute>
-        </xpath>
+        </xpath> -->
 
-        <xpath expr="//t[@t-foreach='lines_grouped']/t[@t-set='current_subtotal']" position="replace"/>
+<!--         <xpath expr="//t[@t-foreach='lines_grouped']/t[@t-set='current_subtotal']" position="replace"/> -->
 
         <xpath expr="//tbody[hasclass('invoice_tbody')]//tr[1]" position="before">
             <t t-set="line" t-value="lines_group['line']"/>
@@ -233,19 +233,19 @@
             <t t-set="last_picking" t-value="picking"/>
         </xpath>
 
-        <xpath expr="//span[@t-esc=	&quot;', '.join(map(lambda x: (x.description or x.name), line.invoice_line_tax_ids))&quot;]" position="attributes">
+<!--         <xpath expr="//span[@t-esc=	&quot;', '.join(map(lambda x: (x.description or x.name), line.invoice_line_tax_ids))&quot;]" position="attributes">
             <attribute name="t-esc">', '.join(map(lambda x: ("%.2f" % x.amount) + ' %', line.invoice_line_tax_ids)).replace('.', ',')</attribute>
-        </xpath>
+        </xpath> -->
 
-        <xpath expr="//td/span[@t-field='line.quantity']" position="attributes">
+<!--         <xpath expr="//td/span[@t-field='line.quantity']" position="attributes">
             <attribute name="t-esc">lines_group['quantity']</attribute>
             <attribute name="t-field"/>
             <attribute name="t-options">{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}</attribute>
-        </xpath>
+        </xpath> -->
 
-        <xpath expr="//td/span[@t-field='line.price_subtotal']" position="before">
+         <xpath expr="//td/span[@t-field='line.price_subtotal']" position="before">
             <t t-if="lines_group['quantity'] != line.quantity" id="picking_subtotal" groups="!sale.group_show_price_total">
-                <!-- Compute subtotal for that picking with discounts -->
+                Compute subtotal for that picking with discounts
                 <t t-set="line_picking_subtotal" t-value="line.quantity and lines_group['quantity'] * (line.price_subtotal / line.quantity) or 0.0"/>
                 <t t-set="subtotal" t-value="(subtotal or 0.0) + line_picking_subtotal"/>
                 <span t-esc="line_picking_subtotal"
@@ -254,7 +254,7 @@
             <t t-else="">
                 <t t-set="subtotal" t-value="(subtotal or 0.0) + line.price_subtotal"/>
             </t>
-        </xpath>
+        </xpath> 
 
         <xpath expr="//td/span[@t-field='line.price_subtotal']" position="attributes">
             <attribute name="t-if">lines_group['quantity'] == line.quantity</attribute>
@@ -266,7 +266,6 @@
 
         <xpath expr="//td/span[@t-field='line.price_total']" position="before">
             <t t-if="lines_group['quantity'] != l.quantity" groups="sale.group_show_price_total">
-                <!-- Compute subtotal for that picking with discounts -->
                 <t t-set="line_picking_subtotal" t-value="line.quantity and lines_group['quantity'] * (line.price_total / line.quantity) or 0.0"/>
                 <t t-set="subtotal" t-value="(subtotal or 0.0) + line_picking_subtotal"/>
                 <span t-esc="line_picking_subtotal"
@@ -275,7 +274,7 @@
             <t t-else="">
                 <t t-set="subtotal" t-value="(subtotal or 0.0) + line.price_subtotal"/>
             </t>
-        </xpath>
+        </xpath> 
 
         <xpath expr="//p[@name='note']" position="attributes">
             <attribute name="style">display:none</attribute>
@@ -360,21 +359,13 @@
             <t t-if="o.fiscal_position_id and o.fiscal_position_id.sudo().note2">
                 <t t-raw="o.fiscal_position_id.sudo().note2"/>
             </t>
-
-<!--             <t t-if="o.fiscal_position_id and o.payment_mode_id">
-                <t t-set="payment_mode" t-value="o.fiscal_position_id.modo_pago(o.payment_mode_id.id)"/>
-                <t t-if="payment_mode">
-                    <br/>
-                    <span t-if="payment_mode" t-raw="payment_mode"/>
-                </t>
-            </t> -->
         </xpath>
     </template>
 
-    <template id="report_invoice_document_with_payments" inherit_id="account.report_invoice_document_with_payments" priority="99">
+<!--     <template id="report_invoice_document_with_payments" inherit_id="account.report_invoice_document_with_payments" priority="99">
         <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[6]/span[1]" position="attributes">
             <attribute name="t-esc">', '.join(map(lambda x: ( x.name), line.invoice_line_tax_ids))</attribute>
         </xpath>
-    </template>
+    </template> -->
 </odoo>
 

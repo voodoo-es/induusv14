@@ -44,15 +44,15 @@
             <attribute name="style">background-color:#e9ecef;</attribute>
         </xpath>
         
-        <xpath expr="//table[hasclass('o_main_table')]/tbody[1]/tr[1]/td[6]" position="attributes">
+<!--         <xpath expr="//table[hasclass('o_main_table')]/tbody[1]/tr[1]/td[6]" position="attributes">
             <attribute name="style">background-color:#e9ecef;</attribute>
-        </xpath>
+        </xpath> -->
         
-        <xpath expr="/t[1]/t[1]/div[2]/table[1]/tbody[1]/tr[1]/td[2]" position="replace"/>
-        <xpath expr="/t[1]/t[1]/div[2]/table[1]/thead[1]/tr[1]/th[2]" position="replace"/>
-        <xpath expr="/t[1]/t[1]/div[2]/table[1]/tbody[1]/tr[1]/td[2]/span[1]" position="attributes">
+<!--         <xpath expr="/t[1]/t[1]/div[2]/table[1]/tbody[1]/tr[1]/td[2]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[2]/table[1]/thead[1]/tr[1]/th[2]" position="replace"/> -->
+<!--         <xpath expr="/t[1]/t[1]/div[2]/table[1]/tbody[1]/tr[1]/td[2]/span[1]" position="attributes">
             <attribute name="t-options-widget">"date"</attribute>
-        </xpath>
+        </xpath> -->
 
         <xpath expr="/t[1]/t[1]/div[2]/div[2]/div[3]/p[1]" position="attributes">
             <attribute name="t-options-widget">"date"</attribute>
@@ -82,18 +82,14 @@
             <attribute name="t-options">{'widget': 'monetary', 'display_currency': line.currency_id}</attribute>
         </xpath>
 
-<!--         <xpath expr="/t[1]/t[1]/div[2]/div[3]/div[1]/table[1]/tr[2]/td[1]" position="replace"/> -->
-<!--         <xpath expr="/t[1]/t[1]/div[2]/div[3]/div[1]/table[1]/tr[2]/td[1]" position="replace"/> -->
-<!--         <xpath expr="/t[1]/t[1]/div[2]/div[3]/div[1]/table[1]/tr[3]/td[2]" position="replace"/> -->
-<!--         <xpath expr="/t[1]/t[1]/div[2]/div[3]/div[1]/table[1]/tr[3]" position="replace"/> -->
         
         <xpath expr="//table[hasclass('o_main_table')]/thead[1]/tr[1]/th[1]" position="before">
             <th class="text-center">Pos.</th>
         </xpath>
         
-        <xpath expr="//table[hasclass('o_main_table')]/tbody[1]/tr[1]/td[1]" position="before">
+<!--         <xpath expr="//table[hasclass('o_main_table')]/tbody[1]/tr[1]/td[1]" position="before">
             <td class="text-center" style="background-color:#e9ecef;"><t t-esc="line_index + 1"/></td>
-        </xpath>
+        </xpath> -->
         
         <xpath expr="//div[@id='total']//table[1]/tr[1]/td[2]" position="attributes">
             <attribute name="style">background-color:#e9ecef;</attribute>
@@ -130,17 +126,17 @@
             <attribute name="style">background-color:#e9ecef;</attribute>
         </xpath>
         
-        <xpath expr="//table[1]/tbody[1]/tr[1]/td[2]/span[1]" position="attributes">
+<!--         <xpath expr="//table[1]/tbody[1]/tr[1]/td[2]/span[1]" position="attributes">
             <attribute name="t-options-widget">"date"</attribute>
-        </xpath>
+        </xpath> -->
         
         <xpath expr="//table[1]/thead[1]/tr[1]/th[1]" position="before">
             <th class="text-center">Pos.</th>
         </xpath>
         
-        <xpath expr="//table[1]/tbody[1]/tr[1]/td[1]" position="before">
+<!--         <xpath expr="//table[1]/tbody[1]/tr[1]/td[1]" position="before">
             <td class="text-center" style="background-color:#e9ecef;"><t t-esc="order_line_index + 1"/></td>
-        </xpath>
+        </xpath> -->
         
         <xpath expr="//table[1]" position="before">
             <div id="informations" class="row mt32 mb32">

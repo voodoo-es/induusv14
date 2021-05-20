@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="invoice_supplier_form" model="ir.ui.view">
-        <field name="name">account.invoice.supplier.form.induus</field>
+        <field name="name">account.move.supplier.form.induus</field>
         <field name="model">account.move</field>
         <field ref="account.view_move_form" name="inherit_id"/>
         <field name="arch" type="xml">
@@ -12,26 +12,6 @@
                         string="Buscar envíos"
                         icon="fa-download"/>
             </xpath>
-
-<!--             <xpath expr="//span[hasclass('o_form_label')][1]" position="replace">
-                <span class="o_form_label" attrs="{'invisible': ['|',('state','!=','draft'), ('type','!=','in_invoice')]}">Borrador Factura de proveedor</span>
-            </xpath> -->
-
-<!--             <xpath expr="//span[hasclass('o_form_label')][2]" position="replace">
-                <span class="o_form_label" attrs="{'invisible': [('sequence_number_next_prefix','=',False)]}">- Primer número:</span>
-            </xpath>
- -->
-<!--             <xpath expr="//span[hasclass('o_form_label')][3]" position="replace">
-                <span class="o_form_label" attrs="{'invisible': ['|',('state','!=','draft'), ('type','!=','in_refund')]}">Borrador factura cliente</span>
-            </xpath> -->
-
-<!--             <xpath expr="//span[hasclass('o_form_label')][4]" position="replace">
-                <span class="o_form_label" attrs="{'invisible': ['|',('state', '=', 'draft'), ('type','!=','in_invoice')]}">Factura de proveedor </span>
-            </xpath> -->
-
-<!--             <xpath expr="//span[hasclass('o_form_label')][5]" position="replace">
-                <span class="o_form_label" attrs="{'invisible': ['|',('state', '=', 'draft'), ('type','!=','in_refund')]}">Nota de crédito proveedor </span>
-            </xpath> -->
 
             <xpath expr="//sheet[1]/div[1]" position="before">
                 <div class="oe_button_box" name="button_box">
@@ -83,7 +63,7 @@
 
 <!--     <record id="view_move_tree_induus" model="ir.ui.view">
         <field name="name">view.move.tree.induus</field>
-        <field name="model">account.invoice</field>
+        <field name="model">account.move</field>
         <field ref="account.view_move_tree" name="inherit_id"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="attributes">
@@ -96,10 +76,10 @@
         </field>
     </record> -->
 
-<!--     <record id="view_invoice_supplier_purchase_form" model="ir.ui.view">
-        <field name="name">ccount.invoice.supplier.purchase.induus</field>
-        <field name="model">account.invoice</field>
-        <field ref="purchase.view_invoice_supplier_purchase_form" name="inherit_id"/>
+<!--     <record id="view_move_form_induus" model="ir.ui.view">
+        <field name="name">account.view.move.form.induus</field>
+        <field name="model">account.move</field>
+        <field ref="account.view_move_form" name="inherit_id"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vendor_bill_purchase_id']" position="before">
                 <field name="partner_valids_ids" invisible="1"/>

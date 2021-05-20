@@ -24,7 +24,7 @@ class ImportarEnvio(models.TransientModel):
     _name = 'induus.importar_envio'
     _description = 'Importar envios'
 
-    invoice_id = fields.Many2one('account.invoice', string="Factura", required=True, ondelete="cascade")
+    invoice_id = fields.Many2one('account.move', string="Factura", required=True, ondelete="cascade")
     fecha_inicio = fields.Date('Fecha inicio', required=True, default=fields.Date.context_today)
     fecha_fin = fields.Date('Fecha fin', required=True, default=fields.Date.context_today)
     envio_ids = fields.One2many('induus.importar_envio_dato', 'importar_envios_id')
@@ -59,7 +59,7 @@ class ImportarEnvio(models.TransientModel):
             data[envio.codigo_envio]["precio"] += float(envio.importe) / 1.21
 
         for codigo_envio, item in data.items():
-            linea = self.env['account.invoice.line'].search([
+            linea = self.env['account.move.line'].search([
                 ('invoice_id', '=', self.invoice_id.id),
                 ('name', '=', codigo_envio),
             ], limit=1)
@@ -111,9 +111,9 @@ class ImportarEnvio(models.TransientModel):
                 values.update({'price_unit': item['precio'] / len(account_analytic_ids)})
                 for analytic_id in account_analytic_ids:
                     values.update({'account_analytic_id': analytic_id})
-                    self.env['account.invoice.line'].create(values)
+                    self.env['account.move.line'].create(values)
             else:
-                self.env['account.invoice.line'].create(values)
+                self.env['account.move.line'].create(values)
 
         self.invoice_id.compute_taxes()
 
@@ -195,7 +195,7 @@ class ImportarEnvioDato(models.TransientModel):
                 
     def _compute_existe(self):
         for r in self:
-            linea = self.env['account.invoice.line'].search([
+            linea = self.env['account.move.line'].search([
                 ('invoice_id', '=', r.importar_envios_id.invoice_id.id),
                 ('name', '=', r.codigo_envio),
             ], limit=1)

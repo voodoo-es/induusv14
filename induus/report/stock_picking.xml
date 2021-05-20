@@ -27,13 +27,13 @@
             </td>
         </xpath>
 
-        <xpath expr="//span[@t-field='o.date_done']" position="attributes">
+<!--         <xpath expr="//span[@t-field='o.date_done']" position="attributes">
             <attribute name="t-options-widget">"date"</attribute>
-        </xpath>
+        </xpath> -->
         
-        <xpath expr="//span[@t-field='o.scheduled_date']" position="attributes">
+<!--         <xpath expr="//span[@t-field='o.scheduled_date']" position="attributes">
             <attribute name="t-options-widget">"date"</attribute>
-        </xpath>
+        </xpath> -->
         
         <xpath expr="//table[1]/thead[1]/tr[1]" position="inside">
             <t t-if="o.gene_envio_ids" 
@@ -122,15 +122,15 @@
             </table>
         </xpath>
 
-        <xpath expr="//table[3]" position="replace"/>
+<!--         <xpath expr="//table[3]" position="replace"/>
 
         <xpath expr="//table[1]/thead[1]/tr[1]/th[6]" position="replace"/>
-        <xpath expr="//table[1]/tbody[1]/tr[1]/td[6]" position="replace"/>
+        <xpath expr="//table[1]/tbody[1]/tr[1]/td[6]" position="replace"/> -->
     </template>
 
-    <template id="report_delivery_document_inherit_sale_stock" inherit_id="sale_stock.report_delivery_document_inherit_sale_stock">
+<!--     <template id="report_delivery_document_inherit_sale_stock" inherit_id="sale_stock.report_delivery_document_inherit_sale_stock">
         <xpath expr="//div/div" position="replace"/>
-    </template>
+    </template> -->
 
     <template id="report_picking" inherit_id="stock.report_picking">
         <xpath expr="//table[1]/thead[1]/tr[1]" position="inside">
@@ -144,14 +144,14 @@
             <th t-if="codigos_seguimiento" class="text-center"><strong>Tracking</strong></th>
         </xpath>
         
-        <xpath expr="//table[1]/tbody[1]/tr[1]" position="inside">
+<!--         <xpath expr="//table[1]/tbody[1]/tr[1]" position="inside">
             <td t-if="nombres_agencias" class="text-center bg-white">
                 <t t-esc="nombres_agencias" />
             </td>
             <td t-if="codigos_seguimiento" class="text-center bg-white">
                 <t t-esc="codigos_seguimiento" />
             </td>
-        </xpath>
+        </xpath> -->
         
         <xpath expr="//table[1]" position="attributes">
             <attribute name="class" add="table-center o_bg_gris" separator=" "/>
@@ -161,17 +161,17 @@
             <attribute name="class" add="table-center o_bg_gris" separator=" "/>
         </xpath>
 
-        <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="after">
+<!--         <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="after">
             <th t-if="o.picking_type_id.code == 'outgoing'"><strong>Código/Peso</strong></th>
-        </xpath>
+        </xpath> -->
 
-        <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="replace">
+<!--         <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="replace">
             <th><strong><t t-if="o.picking_type_id.code == 'outgoing'">R. Cliente</t><t t-if="o.picking_type_id.code == 'incoming'">R. Proveedor</t>/Descripción</strong></th>
-        </xpath>
+        </xpath> -->
         
-        <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="before">
+<!--         <xpath expr="//table[@t-if='o.move_line_ids']/thead[1]/tr[1]/th[1]" position="before">
             <th class="text-center">Pos.</th>
-        </xpath>
+        </xpath> -->
 
         
         <xpath expr="//table[2]/tbody[1]//tr[1]/td[1]" position="replace">
@@ -211,7 +211,7 @@
         </xpath>
     </template>
 
-    <template id="label_transfer_template_view" inherit_id="stock_zebra.label_transfer_template_view">
+<!--     <template id="label_transfer_template_view" inherit_id="stock_zebra.label_transfer_template_view">
         <xpath expr="//t[@t-as='move_line']/t[1]" position="replace">
             <t t-if="int(move_line.qty_done)&gt;0 and move_line.move_id.imprimir_etiqueta">
               <t t-if="picking.sale_id">
@@ -284,5 +284,5 @@
 </t>
           </t>
         </xpath>
-    </template>
+    </template> -->
 </odoo>

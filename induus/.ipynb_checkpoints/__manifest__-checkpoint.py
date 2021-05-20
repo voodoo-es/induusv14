@@ -46,32 +46,32 @@
 
     # always loaded
     'data': [
-        'security/portal_security.xml',
+#         'security/portal_security.xml',
 #         'security/ir.model.access.csv',
 #         #'data/product.xml',
 #         #'data/hr_expense.xml',
         'data/mail.xml',
-#         'data/mail_activity.xml',
+        'data/mail_activity.xml',
         'data/sale.xml',
         'data/induus_equipo.xml',
         'data/induus_zona.xml',
-#         'data/res_partner.xml',
+        'data/res_partner.xml',
         'data/utm.xml',
         'data/documents.xml',
-#         'data/website_crm.xml',
+        'data/website_crm.xml',
         'report/induus_report.xml',
-#         'report/purchase.xml',
+        'report/purchase.xml',
         'report/sale.xml',
-#         'report/stock_picking.xml',
-#         'report/account.xml',
+        'report/stock_picking.xml',
+        'report/account.xml',
 #         'report/product_product.xml',
 #         'report/product_template.xml',
         'data/report_layout.xml',
         'views/induus_proyecto_detalle.xml',
-        'views/induus_plantilla_proyecto_detalle.xml', # error
-        'views/induus_plantilla_proyecto_editor.xml', # error
+        'views/induus_plantilla_proyecto_detalle.xml',
+        'views/induus_plantilla_proyecto_editor.xml',
          'views/sale_order.xml', #campos
-        'views/account.xml', # error
+        'views/account.xml', 
         'views/menu_stock.xml',
         'views/web.xml',
         'views/res_company.xml',
@@ -81,7 +81,7 @@
         'views/account_move.xml', # campos
         'views/account_fiscal_position.xml',
         'views/account_invoice_supplier.xml', # campos
-        'views/res_partner.xml', # error
+        'views/res_partner.xml',
 #         'views/product_template.xml', # comentado
         'views/product_product.xml',
         'views/product_category.xml',
@@ -90,11 +90,11 @@
         'views/induus_zona.xml',
         'views/base.xml',
         'views/stock.xml',
-        'views/stock_picking.xml', # error
-        'views/crm_lead.xml', # error
+        'views/stock_picking.xml', 
+        'views/crm_lead.xml', 
         'views/delivery_carrier.xml',
         'views/payment_view.xml',
-        'views/induus_ventas_producto.xml', # error
+        'views/induus_ventas_producto.xml', 
         'views/induus_equipo.xml',
         'views/induus_genei_envio.xml',
         'views/board.xml',

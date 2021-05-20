@@ -11,7 +11,6 @@
                 <field name="partner_id"/>
                 <field name="amount" widget="Monetary"/>
                 <field name="statement_id"/>
-<!--                 <field name="journal_currency_id" invisible="1"/> -->
             </tree>
         </field>
     </record>

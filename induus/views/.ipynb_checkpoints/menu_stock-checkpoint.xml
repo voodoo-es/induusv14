@@ -1,26 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_account_position_form" model="ir.ui.view">
-        <field name="name">account.fiscal.position.form.induus</field>
-        <field name="model">account.fiscal.position</field>
-        <field ref="account.view_account_position_form" name="inherit_id"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='note']" position="replace">
-                <group>
-                    <field name="note" placeholder="Legal Notes..."/>
-                    <field name="note2"/>
-                    <field name="fiscal_position_pay_model_ids">
-                        <tree editable="bottom">
-                            <field name="payment_mode_id"/>
-                            <field name="note"/>
-                        </tree>
-                    </field>
-                </group>
-            </xpath>
-            
-            <xpath expr="//field[@name='company_id'][1]" position="after">
-                <field name="intrastat_required_partner"/>
-            </xpath>
-        </field>
+    <record id="action_pedido_compra_facturar" model="ir.actions.act_window">
+        <field name="name">PC a facturar</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+        <field name="domain">[('state','in',('purchase', 'done')), ('pedido_completo','=',False), ('invoice_status','=','to invoice'), ('prueba','=',False)]</field>
+        <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
     </record>
+
+    <record id="action_orders_to_invoice_no_auto" model="ir.actions.server">
+        <field name="name">PV no automáticos</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = env['sale.order'].action_order_invoice_no_auto()</field>
+    </record>
+
+    <record id="action_orders_to_invoice_auto" model="ir.actions.server">
+        <field name="name">PV a facturar</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = env['sale.order'].action_order_invoice_auto()</field>
+    </record>
+
+    <menuitem id="menu_pedidos_venta_facturar_no_auto"
+              action="action_orders_to_invoice_no_auto"
+              name="PV a facturar"
+              parent="stock.menu_stock_root"
+              sequence="5"/>
+
+    <menuitem id="menu_pedido_compra_facturar"
+              action="action_pedido_compra_facturar"
+              name="PC a facturar"
+              parent="stock.menu_stock_root"
+              sequence="6"/>
+
+    <menuitem id="menu_pedidos_venta_facturar_auto"
+              action="action_orders_to_invoice_auto"
+              name="PV no automaticos"
+              parent="stock.menu_stock_root"
+              sequence="4"/>
 </odoo>

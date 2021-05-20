@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ImportInvoiceImportWizard(models.TransientModel):
-    _inherit = 'account.invoice.import.wizard'
+    _inherit = 'account.move.import.wizard'
 
 #     @api.multi
     def _create_invoice_from_file(self, attachment):

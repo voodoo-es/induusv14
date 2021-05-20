@@ -26,7 +26,6 @@
                         <field name="referencia"/>
                         <field name="serial"/>
                         <field name="eme"/>
-<!--                         <field name="partner_id"/> -->
                     </group>
                     <notebook>
                         <page string="Ventas">

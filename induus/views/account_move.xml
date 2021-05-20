@@ -39,14 +39,6 @@
                 </button>
             </xpath>
 
-<!--             <xpath expr="//span[hasclass('o_form_label')][1]" position="replace">
-                <span class="o_form_label" attrs="{'invisible': ['|',('state','=','draft'), ('type','!=','out_refund')]}">Nota de crédito cliente</span>
-            </xpath> -->
-
-<!--             <xpath expr="//span[hasclass('o_form_label')][1]" position="after">
-                <span class="o_form_label" attrs="{'invisible': ['|',('state', '=', 'draft'), ('type','!=','out_invoice')]}">Factura de cliente </span>
-            </xpath> -->
-
             <xpath expr="//field[@name='invoice_line_ids']/tree[1]/field[@name='name']" position="after">
                 <field name="referencia_cliente"/>
             </xpath>

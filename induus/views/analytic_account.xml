@@ -64,7 +64,6 @@
     <record id="action_account_analytic_account_hojas_margenes_tree" model="ir.actions.act_window">
         <field name="name">Hoja de Márgenes</field>
         <field name="res_model">account.analytic.account</field>
-<!--         <field name="view_type">form</field> -->
         <field name="view_mode">tree,form</field>
         <field name="domain">[('invoice_id', '!=', False)]</field>
         <field name="context">{'group_by': 'invoice_date_invoice'}</field>
