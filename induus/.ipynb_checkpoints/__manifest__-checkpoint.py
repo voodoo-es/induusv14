@@ -34,7 +34,6 @@
         'account_due_list',
         'board',
         'l10n_es_partner',
-        'google_calendar',
         'utm',
         'account_invoice_extract',
         'account_payment_order',
