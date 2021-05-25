@@ -4,25 +4,14 @@
         <field name="view_mode">kanban,tree</field>
     </record>
 
-<!--         <record id="documents_view_list" model="ir.ui.view">
-            <field name="name">attachments_list.induus</field>
-            <field name="model">ir.attachment</field>
-            <field ref="documents.documents_view_list" name="inherit_id"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="after">
-                    <field name="partner_id"/>
-                </xpath>
-            </field>
-        </record> -->
-
-<!--     <record id="documents_view_kanban" model="ir.ui.view">
+<!--      <record id="documents_view_kanban" model="ir.ui.view">
         <field name="name">ir.attachment kanban induus</field>
         <field name="model">ir.attachment</field>
         <field ref="documents.documents_view_kanban" name="inherit_id"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="invoice_id"/>
-                <field name="date_invoice"/>
+                <field name="invoice_date"/>
                 <field name="expense_id"/>
                 <field name="date_expense"/>
             </xpath>
@@ -45,7 +34,7 @@
                     <field name="date_expense"/>
                     <br/>
                 </t>
-            </xpath>
+            </xpath> 
         </field>
     </record> -->
 </odoo>

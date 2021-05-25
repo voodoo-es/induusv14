@@ -70,10 +70,10 @@
         <field name="view_id" ref="account_analytic_account_hojas_margenes_tree"/>
     </record>
 
-    <menuitem action="action_account_analytic_account_hojas_margenes_tree"
+<!--     <menuitem action="action_account_analytic_account_hojas_margenes_tree"
               id="menu_account_analytic_account_hojas_margenes_tree"
               name="Hoja de Margenes"
               parent="account_accountant.menu_accounting"
               groups="account.group_account_user"
-              sequence="5"/>
+              sequence="5"/> -->
 </odoo>

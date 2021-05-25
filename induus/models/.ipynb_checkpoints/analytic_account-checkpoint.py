@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo.addons.induus.models.induus_db import InduusDB
+# from odoo.addons.induus.models.induus_db import InduusDB
 from odoo import models, fields, api
 
 _logger = logging.getLogger(__name__)

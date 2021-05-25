@@ -54,7 +54,6 @@
             <xpath expr="//field[@name='amount_residual']" position="after">
                 <field name="margen_analitico"/>
                 <field name="margen_analitico_porcentaje"/>
-<!--                 <field name="margin" string="Beneficio"/> -->
                 <field name="margin_porcentaje"/>
             </xpath>
         </field>
@@ -63,7 +62,7 @@
 <!--     <record id="view_move_tree_induus" model="ir.ui.view">
         <field name="name">account.view.move.tree.induus</field>
         <field name="model">account.move</field>
-        <field ref="account.view_move_tree" name="inherit_id"/>
+        <field ref="account.view_invoice_tree" name="inherit_id"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='amount_total_signed']" position="after">
                 <field name="margen_analitico" sum="Margen analítico"/>
@@ -79,14 +78,14 @@
                 <field name="num_dias_cobro"/>
             </xpath>
         </field>
-    </record> -->
-
+    </record>
+ -->
 <!--     <record id="view_account_invoice_tree" model="ir.ui.view">
         <field name="name">account.move tree.induus2</field>
         <field name="model">account.move</field>
-        <field ref="account_invoice_margin.view_account_invoice_tree" name="inherit_id"/>
+        <field ref="account.view_invoice_tree" name="inherit_id"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='margin_signed']" position="replace"/>
+            <xpath expr="//field[@name='amount_total_signed']" position="replace"/>
             <xpath expr="//field[@name='margin_percent']" position="replace"/>
         </field>
     </record> -->

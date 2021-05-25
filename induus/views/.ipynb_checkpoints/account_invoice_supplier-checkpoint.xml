@@ -60,36 +60,6 @@
             </xpath> -->
         </field>
     </record>
-
-<!--     <record id="view_move_tree_induus" model="ir.ui.view">
-        <field name="name">view.move.tree.induus</field>
-        <field name="model">account.move</field>
-        <field ref="account.view_move_tree" name="inherit_id"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='partner_id']" position="attributes">
-                <attribute name="invisible">0</attribute>
-            </xpath>
-
-            <xpath expr="//field[@name='vendor_display_name']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
-        </field>
-    </record> -->
-
-<!--     <record id="view_move_form_induus" model="ir.ui.view">
-        <field name="name">account.view.move.form.induus</field>
-        <field name="model">account.move</field>
-        <field ref="account.view_move_form" name="inherit_id"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='vendor_bill_purchase_id']" position="before">
-                <field name="partner_valids_ids" invisible="1"/>
-            </xpath>
-
-            <xpath expr="//field[@name='vendor_bill_purchase_id']" position="attributes">
-                <attribute name="domain">[('partner_id','child_of',partner_valids_ids)]</attribute>
-            </xpath>
-        </field>
-    </record> -->
 </odoo>
 
 

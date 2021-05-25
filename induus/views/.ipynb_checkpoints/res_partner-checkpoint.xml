@@ -1,26 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_account_position_form" model="ir.ui.view">
-        <field name="name">account.fiscal.position.form.induus</field>
-        <field name="model">account.fiscal.position</field>
-        <field ref="account.view_account_position_form" name="inherit_id"/>
+    <act_window id="action_zona"
+                name="Zonas"
+                res_model="induus.zona"/>
+
+    <menuitem id="menu_zona"
+              action="action_zona"
+              name="Zonas"
+              parent="contacts.res_partner_menu_config"
+              sequence="4"/>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form.induus</field>
+        <field name="model">res.partner</field>
+        <field ref="base.view_partner_form" name="inherit_id"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='note']" position="replace">
-                <group>
-                    <field name="note" placeholder="Legal Notes..."/>
-                    <field name="note2"/>
-                    <field name="fiscal_position_pay_model_ids">
-                        <tree editable="bottom">
-                            <field name="payment_mode_id"/>
-                            <field name="note"/>
-                        </tree>
-                    </field>
-                </group>
+            <xpath expr="//field[@name='mobile']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
+
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="sale_order_team_id"/>
+                <field name="agencia_genei_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='type']" position="before">
+                <field name="validar_campos" invisible="True"/>
+<!--                 <field name="zona_id" attrs="{'required': [('validar_campos', '=', True), ('company_type', '=', 'company'), ('customer', '=', True)]}"/> -->
+            </xpath>
+
+            <xpath expr="//field[@name='street']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company')], 'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='city']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company')], 'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='state_id']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company')], 'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}</attribute>
+            </xpath>
+
+<!--             <xpath expr="//field[@name='zip']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company')], 'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}</attribute>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='country_id']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company')], 'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}</attribute>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company')], 'readonly': [('parent_id','!=',False)]}</attribute>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='phone']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company')]}</attribute>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='email']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), '|', ('company_type', '=', 'company'), ('user_ids','!=', [])]}</attribute>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company')]}</attribute>
+            </xpath> -->
             
-            <xpath expr="//field[@name='company_id'][1]" position="after">
-                <field name="intrastat_required_partner"/>
+<!--             <xpath expr="//group[@name='sale']" position="inside">
+                <field name="no_facturar_auto"/>
+                <field name="no_mostrar_ref"/>
+                <field name="mostrar_ref_cliente"/>
+                <field name="mostrar_ref_induus"/>
+            </xpath> -->
+
+<!--             <xpath expr="//page[@name='sales_purchases']//field[@name='supplier']" position="after">
+                <field name="supplier_property_delivery_carrier_id"/>
+                <field name="seguimiento"/>
+            </xpath> -->
+
+<!--             <xpath expr="//page[@name='sales_purchases']/group[1]" position="inside">
+                <group name="instratat" string="Intrastat">
+                    <field name="intrastat_required_partner" invisible="1"/>
+                    <field name="country_code" invisible="1"/>
+                    <field name="incoterm_id" attrs="{'required': [('intrastat_required_partner', '=', True)], 'readonly': [('parent_id', '!=', False)]}"/>
+                    <field name="intrastat_country_id" attrs="{'required': [('intrastat_required_partner', '=', True)], 'readonly': [('parent_id', '!=', False)]}"/>
+                    <field name="intrastat_transport_mode_id" attrs="{'required': [('intrastat_required_partner', '=', True)], 'readonly': [('parent_id', '!=', False)]}"/>
+                </group>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='vat']" position="after">
+                <field name="seguimiento_cliente"/>
+                <field name="seguimiento_comercial"/>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='child_ids']/form//field[@name='function']" position="attributes">
+                <attribute name="attrs">{'required': [('type', '=', 'contact')], 'invisible': [('type','!=', 'contact')]}</attribute>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='child_ids']/form//field[@name='email']" position="attributes">
+                <attribute name="attrs">{'required': [('type', '=', 'contact')]}</attribute>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='child_ids']/form//field[@name='mobile']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath> -->
+
+<!--             <xpath expr="//field[@name='child_ids']/form//field[@name='phone']" position="attributes">
+                <attribute name="attrs">{'required': [('type', '=', 'contact')]}</attribute>
+            </xpath> -->
+        </field>
+    </record>
+
+    <record id="view_partner_tree" model="ir.ui.view">
+        <field name="name">res.partner.tree.induus</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="sale_order_team_id"/>
             </xpath>
+        </field>
+    </record>
+
+<!--     <record id="view_partner_form2" model="ir.ui.view">
+        <field name="name">res.partner.form.induus2</field>
+        <field name="model">res.partner</field>
+        <field ref="l10n_es_partner.view_partner_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='comercial']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company'), '|', ('customer', '=', True), ('is_company', '=', True)]}</attribute>
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company'), '|', ('customer', '=', True), ('supplier', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="view_partner_simple_form" model="ir.ui.view">
+        <field name="name">res.partner.simplified.form.induus</field>
+        <field name="model">res.partner</field>
+        <field ref="base.view_partner_simple_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='mobile']" postion="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter" model="ir.ui.view">
+        <field name="name">res.partner.select.induus</field>
+        <field name="model">res.partner</field>
+        <field ref="base.view_res_partner_filter" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="zona_id"/>
+            </xpath>
+
+            <xpath expr="//group[1]" position="inside">
+                <filter name="group_zona" string="Zona" context="{'group_by': 'zona_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--     <record id="view_partner_property_form_account" model="ir.ui.view">
+        <field name="name">res.partner.property.form.inherit.account.induus</field>
+        <field name="model">res.partner</field>
+        <field ref="account.view_partner_property_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_payment_term_id']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company'), ('customer', '=', True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='customer_payment_mode_id']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company'), ('customer', '=', True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='property_supplier_payment_term_id']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company'), ('supplier', '=', True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='supplier_payment_mode_id']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('company_type', '=', 'company'), ('supplier', '=', True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='property_account_position_id']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), '|', ('customer', '=', True), ('supplier', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record> -->
+
+<!--     <record id="view_partner_property_form_product" model="ir.ui.view">
+        <field name="name">res.partner.product.property.form.product.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="product.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+                <attribute name="attrs">{'required': [('validar_campos', '=', True), ('customer', '=', True), ('parent_id','=',False)], 'invisible': [('is_company','=',False),('parent_id','!=',False)]}</attribute>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="induus_fiscal_position_payment_mode_rel_form" model="ir.ui.view">
+        <field name="name">induus.fiscal_position_payment_mode_rel.form</field>
+        <field name="model">induus.fiscal_position_payment_mode_rel</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="fiscal_position_id"/>
+                        <field name="payment_mode_id"/>
+                        <field name="note"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="induus_fiscal_position_payment_mode_rel_tree" model="ir.ui.view">
+        <field name="name">induus.fiscal_position_payment_mode_rel.tree</field>
+        <field name="model">induus.fiscal_position_payment_mode_rel</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="fiscal_position_id"/>
+                <field name="payment_mode_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="induus_fiscal_position_payment_mode_rel_search" model="ir.ui.view">
+        <field name="name">induus.fiscal_position_payment_mode_rel.search</field>
+        <field name="model">induus.fiscal_position_payment_mode_rel</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="fiscal_position_id"/>
+                <field name="payment_mode_id"/>
+            </search>
         </field>
     </record>
 </odoo>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.common.form.induus</field>
+        <field name="model">product.template</field>
+        <field ref="product.product_template_form_view" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook[1]" position="inside">
+                <page name="referencia_cliente" string="R. Cliente">
+                    <group string="Referencias Clientes">
+                        <field name="referencia_cliente_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//page[@name='sales']/group[@name='sale']" position="inside">
+                <group>
+                    <field name="imprimir_etiqueta_por_cantidad"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_template_property_form" model="ir.ui.view">
+        <field name="name">product.template.stock.property.form.inherit.induus</field>
+        <field name="model">product.template</field>
+        <field ref="stock.view_template_property_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='operations']" position="inside">
+                <label for="sale_delay_with_stock" attrs="{'invisible': [('sale_ok', '=', False)]}"/>
+                <div attrs="{'invisible': [('sale_ok', '=', False)]}">
+                    <field name="sale_delay_with_stock" class="oe_inline" style="vertical-align:baseline"/> days
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_search_view" model="ir.ui.view">
+        <field name="name">product.template.search.induus</field>
+        <field name="model">product.template</field>
+        <field ref="product.product_template_search_view" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <separator/>
+                <field name="variant_seller_ids" string="Referencia Proveedor" filter_domain="[('variant_seller_ids.product_code', 'ilike', self)]"/>
+                <field name="referencia_cliente_ids"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--     <record id="product_template_form_view_website_induus" model="ir.ui.view">
+        <field name="name">product.template.product.website.form.induus</field>
+        <field name="model">product.template</field>
+        <field ref="website_sale.product_template_form_view" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='extra_images']" position="before">
+                <group>
+                    <field name="descripcion_website"/>
+                </group>
+            </xpath>
+        </field>
+    </record> -->
+
+    <menuitem action="purchase.purchase_form_action"
+              id="purchase.menu_purchase_form_action"
+              parent="purchase.menu_purchase_root"
+              sequence="0"/>
+
+    <menuitem action="purchase.purchase_rfq"
+              id="purchase.menu_purchase_rfq"
+              parent="purchase.menu_purchase_root"
+              sequence="0"/>
+</odoo>

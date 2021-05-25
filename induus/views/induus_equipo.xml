@@ -93,9 +93,8 @@
               parent="induus.menu_induus_equipo_main"
               sequence="5"/>
 
-<!--     <menuitem id="menu_induus_equipo_detalle"
-              action="induus_equipo_detalle_action"
+    <menuitem id="menu_induus_equipo_detalle"
               name="Detalle equipos"
               parent="induus.menu_induus_equipo_main"
-              sequence="10"/> -->
+              sequence="10"/>
 </odoo>

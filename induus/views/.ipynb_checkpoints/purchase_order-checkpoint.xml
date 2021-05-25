@@ -1,26 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_account_position_form" model="ir.ui.view">
-        <field name="name">account.fiscal.position.form.induus</field>
-        <field name="model">account.fiscal.position</field>
-        <field ref="account.view_account_position_form" name="inherit_id"/>
+    <record id="purchase_order_tree" model="ir.ui.view">
+        <field name="name">purchase.order.tree.induus</field>
+        <field name="model">purchase.order</field>
+        <field ref="purchase.purchase_order_tree" name="inherit_id"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='note']" position="replace">
-                <group>
-                    <field name="note" placeholder="Legal Notes..."/>
-                    <field name="note2"/>
-                    <field name="fiscal_position_pay_model_ids">
-                        <tree editable="bottom">
-                            <field name="payment_mode_id"/>
-                            <field name="note"/>
-                        </tree>
-                    </field>
-                </group>
+            <xpath expr="//field[@name='amount_untaxed']" position="after">
+                <field name="amount_tax" sum="Total Tax" widget="monetary"/>
             </xpath>
-            
-            <xpath expr="//field[@name='company_id'][1]" position="after">
-                <field name="intrastat_required_partner"/>
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="date_approve" attrs='{}'/>
+            </xpath>
+
+            <xpath expr="//field[@name='date_planned']" position="before">
+                <field name="effective_date" widget="date"/>
+            </xpath>
+
+            <xpath expr="//field[@name='date_planned']" position="after">
+                <xpath expr="//field[@name='date_order']" position="move"/>
+            </xpath>
+
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="string">Comprador</attribute>
             </xpath>
         </field>
     </record>
+
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.form.induus</field>
+        <field name="model">purchase.order</field>
+        <field ref="purchase.purchase_order_form" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button type="object"
+                        name="action_view_sale_order_origin"
+                        class="oe_stat_button"
+                        icon="fa-usd"
+                        attrs="{'invisible':[('sale_order_count', '=', 0)]}">
+                    <field name="sale_order_count" widget="statinfo" string="Pedidos Venta"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="parent_partner_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='origin']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="equipo_id"/>
+                <field name="partner_origin_ids" widget="many2many_tags"/>
+                <field name="carrier_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='date_order']" position="before">
+                <field name="anular_stock"/>
+                <field name="prueba"/>
+                <field name="sale_account_analytic_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="context">{'default_account_analytic_id': sale_account_analytic_id}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree[1]/field[@name='account_analytic_id']" position="before">
+                <field name="invoice_sale_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='date_approve']" position="replace"/>
+
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="date_approve"/>
+                <field name="effective_date" widget="date"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="context">{'partner_id':parent.partner_id, 'parent_partner_id':parent.parent_partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_filter" model="ir.ui.view">
+        <field name="name">request.quotation.select.induus</field>
+        <field name="model">purchase.order</field>
+        <field ref="purchase.view_purchase_order_filter" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="partner_ref"/>
+                <field name="descripcion_linea"/>
+            </xpath>
+
+            <xpath expr="//filter[@name='my_purchases']" position="after">
+                <separator/>
+                <filter name="prueba" string="Pedidos de Compra en Prueba" domain="[('prueba','=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_line_tree_pc" model="ir.ui.view">
+        <field name="name">purchase.order.line.tree.induus</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date_order"/>
+                <field name="order_id"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="qty_received"/>
+                <field name="qty_invoiced"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_order_invoice_no_auto"
+              action="action_orders_to_invoice_no_auto"
+              parent="sale.menu_sale_invoicing"
+              sequence="2"/>
 </odoo>
