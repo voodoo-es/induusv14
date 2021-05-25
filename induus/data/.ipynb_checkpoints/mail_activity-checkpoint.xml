@@ -25,9 +25,9 @@
         <field name="res_model_id" ref="sale.model_sale_order"/>
     </record>
 
-    <record id="mail_act_fail_email" model="mail.activity.type">
+<!--     <record id="mail_act_fail_email" model="mail.activity.type">
         <field name="name">Email fallido</field>
         <field name="icon">fa-envelope</field>
         <field name="decoration-type">danger</field>
-    </record>
+    </record> -->
 </odoo>
