@@ -64,25 +64,25 @@
         'report/sale.xml',
         'report/stock_picking.xml',
         'report/account.xml',
-#         'report/product_product.xml',
-#         'report/product_template.xml',
+        'report/product_product.xml',
+        'report/product_template.xml',
         'data/report_layout.xml',
         'views/induus_proyecto_detalle.xml',
         'views/induus_plantilla_proyecto_detalle.xml',
         'views/induus_plantilla_proyecto_editor.xml',
-         'views/sale_order.xml', #campos
+#          'views/sale_order.xml', #campos
         'views/account.xml', 
         'views/menu_stock.xml',
         'views/web.xml',
         'views/res_company.xml',
         'views/mail.xml',
-#         'views/analytic_account.xml', # comentado
+        'views/analytic_account.xml', # comentado
         'views/purchase_order.xml',
         'views/account_move.xml', # campos
         'views/account_fiscal_position.xml',
         'views/account_invoice_supplier.xml', # campos
         'views/res_partner.xml',
-#         'views/product_template.xml', # comentado
+        'views/product_template.xml', # comentado
         'views/product_product.xml',
         'views/product_category.xml',
         'views/product_supplierinfo.xml',
@@ -102,7 +102,7 @@
         'views/account_bank_statement.xml',
         'views/mail_tracking_email.xml',
         'views/mail_activity.xml',
-        'templates/assets.xml',
+#         'templates/assets.xml',
 #         'templates/portal.xml',
         'templates/mass_mailing.xml',
         'templates/payment.xml',

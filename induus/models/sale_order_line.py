@@ -28,11 +28,11 @@ class SaleOrderLine(models.Model):
     order_effective_date = fields.Date(related="order_id.effective_date", store=True)
     fecha_prevista = fields.Date('Fecha Prevista', compute="_fecha_prevista")
 
-    @api.onchange('product_uom_qty', 'product_uom', 'route_id')
-    def _onchange_product_id_check_availability(self):
-        res = super(SaleOrderLine, self)._onchange_product_id_check_availability()
-        res.pop('warning', None)
-        return res
+#     @api.onchange('product_uom_qty', 'product_uom', 'route_id')
+#     def _onchange_product_id_check_availability(self):
+#         res = super(SaleOrderLine, self)._onchange_product_id_check_availability()
+#         res.pop('warning', None)
+#         return res
 
     @api.depends('product_id', 'order_id.partner_id')
     def _compute_referencia_cliente(self):
@@ -55,13 +55,13 @@ class SaleOrderLine(models.Model):
 
             r.referencia_cliente = r.product_id.default_code
 
-    @api.depends('price_reduce', 'price_subtotal')
-    def _compute_margen(self):
-        for r in self:
-            if r.margin and r.price_subtotal:
-                r.percent = (r.margin / r.price_subtotal) * 100
-            else:
-                r.percent = 0
+#     @api.depends('price_reduce', 'price_subtotal')
+#     def _compute_margen(self):
+#         for r in self:
+#             if r.margin and r.price_subtotal:
+#                 r.percent = (r.margin / r.price_subtotal) * 100
+#             else:
+#                 r.percent = 0
 
     @api.depends('purchase_price', 'price_subtotal', 'product_uom_qty')
     def _compute_beneficio(self):
@@ -132,12 +132,12 @@ class SaleOrderLine(models.Model):
                 product_qty = line.product_uom._compute_quantity(product_qty, quant_uom, rounding_method='HALF-UP')
                 procurement_uom = quant_uom
 
-            try:
-                self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
-                                                  line.order_id.partner_shipping_id.property_stock_customer, line.name,
-                                                  line.order_id.name, values)
-            except UserError as error:
-                errors.append(error.name)
+#             try:
+#                 self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
+#                                                   line.order_id.partner_shipping_id.property_stock_customer, line.name,
+#                                                   line.order_id.name, values)
+#             except UserError as error:
+#                 errors.append(error.name)
 
         if errors:
             raise UserError('\n'.join(errors))

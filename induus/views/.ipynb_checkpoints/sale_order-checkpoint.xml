@@ -1,26 +1,445 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_account_position_form" model="ir.ui.view">
-        <field name="name">account.fiscal.position.form.induus</field>
-        <field name="model">account.fiscal.position</field>
-        <field ref="account.view_account_position_form" name="inherit_id"/>
+    <record id="action_mark_as_lost" model="ir.actions.server">
+        <field name="name">Marcar como perdido</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">
+            if record:
+            action_values = env.ref('induus.sale_order_lost_action').read()[0]
+            action_values.update({'context': env.context})
+            action = action_values
+        </field>
+    </record>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form.induus</field>
+        <field name="model">sale.order</field>
+        <field ref="sale.view_order_form" name="inherit_id"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='note']" position="replace">
-                <group>
-                    <field name="note" placeholder="Legal Notes..."/>
-                    <field name="note2"/>
-                    <field name="fiscal_position_pay_model_ids">
-                        <tree editable="bottom">
-                            <field name="payment_mode_id"/>
-                            <field name="note"/>
-                        </tree>
-                    </field>
-                </group>
+            <xpath expr="//div[hasclass('oe_title')][1]" position="before">
+                <field name="linea_negocio" invisible="1"/>
+                <div class="badge-pill badge-success float-right" attrs="{'invisible': [('linea_negocio', '!=', 'distribucion')]}">Distribución</div>
+                <div class="badge-pill badge-warning float-right" attrs="{'invisible': [('linea_negocio', '!=', 'reparacion')]}">Reparación</div>
+                <div class="badge-pill badge-dark float-right" attrs="{'invisible': [('linea_negocio', '!=', 'proyecto')]}">Proyecto</div>
             </xpath>
-            
-            <xpath expr="//field[@name='company_id'][1]" position="after">
-                <field name="intrastat_required_partner"/>
+
+            <xpath expr="//field[@name='invoice_count']" position="attributes">
+                <attribute name="string">F. Clientes</attribute>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="opportunity_id" invisible="1"/>
+                <button name="action_sale_crm_lead_view"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-handshake-o"
+                        string="Oportunidad"
+                        attrs="{'invisible': [('opportunity_id', '=', False)]}"/>
+
+                <button name="action_account_analytic"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-usd"
+                        string="Coste/Beneficio"
+                        attrs="{'invisible': [('analytic_account_id', '=', False)]}"/>
+
+                <field name="proyecto_detalle_ids" invisible="1"/>
+                <button name="%(induus.action_induus_proyecto_detalle_linea_tree)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-book"
+                        string="Proyecto"
+                        attrs="{'invisible': [('proyecto_detalle_ids', '=', [])]}"/>
+
+                <button name="action_view_purchase_invoice"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-pencil-square-o"
+                        attrs="{'invisible': [('purchase_invoice_count', '=', 0)]}">
+                    <field name="purchase_invoice_count" widget="statinfo" string="F. Proveedor"/>
+                </button>
+                <button name="action_view_purchase_order"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-cart-plus"
+                        attrs="{'invisible': [('purchase_order_count', '=', 0)]}">
+                    <field name="purchase_order_count" widget="statinfo" string="Compras"/>
+                </button>
+                <button name="action_view_efectos_cobro"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-hourglass-end"
+                        attrs="{'invisible': [('numero_dias_cobro', '=', 0)]}">
+                    <field name="numero_dias_cobro" widget="statinfo" string="Días cobro"/>
+                </button>
+                <button name="action_view_efectos_pago"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-hourglass-start"
+                        attrs="{'invisible': [('numero_dias_pago', '=', 0)]}">
+                    <field name="numero_dias_pago" widget="statinfo" string="Días pago"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="after">
+                <field name="active" invisible="1"/>
+                <div class="badge-pill badge-danger float-right" attrs="{'invisible': [('active', '=', True)]}">Perdido</div>
+            </xpath>
+
+            <xpath expr="//field[@name='validity_date']" position="before">
+                <field name="prueba"/>
+                <field name="no_facturar_auto"/>
+                <field name="no_mostrar_ref"/>
+                <field name="mostrar_ref_cliente"/>
+                <field name="mostrar_ref_induus"/>
+                <field name="date_order"/>
+                <field name="equipo_id"/>
+            </xpath>
+
+            <xpath expr="//page[2]" position="attributes">
+                <attribute name="attrs">{'invisible': [('es_proyecto', '=', True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                <attribute name="decoration-danger">beneficio_porcentaje&lt;4</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                <attribute name="context">{'partner_id': parent.partner_id, 'ref_cliente': parent.partner_id, 'quantity': product_uom_qty, 'pricelist': parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id, 'default_lst_price': price_unit, 'default_description_sale': name, 'default_expense_policy': 'no'}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                <field name="referencia_cliente"/>
+                <field name="margen" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree/field[@name='analytic_tag_ids']" position="before">
+                <field name="beneficio_porcentaje" invisible="1"/>
+                <field name="cantidad_producto" string="Cantidad disponible"/>
+                <field name="cantidad_prevista" string="Cantidad prevista"/>
+                <field name="customer_lead"/>
+                <field name="fecha_prevista"/>
+            </xpath>
+
+            <xpath expr="//group[@name='sales_person']/field[@name='client_order_ref']" position="replace"/>
+
+            <xpath expr="//group[1]/group[1]" position="inside">
+                <field name="client_order_ref"/>
+                <field name="team_id" options="{'no_create': True}"/>
+                <field name="user_id"/>
+                <field name="es_proyecto"/>
+            </xpath>
+
+            <xpath expr="//group[@name='sales_person']" position="inside">
+                <field name="anadir_suscripcion"/>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="margen_analitico"/>
+                <field name="margen_analitico_porcentaje"/>
+                <field name="coste"/>
+            </xpath>
+
+            <xpath expr="//page[@name='order_lines']" position="before">
+                <page name="" string="Plantilla oferta" attrs="{'invisible': [('es_proyecto', '=', False)]}">
+                    <group>
+                        <group>
+                            <field name="plantilla_proyecto_editor_id"/>
+                        </group>
+                        <group>
+                            <button name="cargar_plantilla_proyecto_editor"
+                                string="Cargar plantilla Editor"
+                                type="object"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="proyecto_titulo" attrs="{'required': [('es_proyecto', '=', True)]}"/>
+                        <field name="editor_proyecto"/>
+                    </group>
+                </page>
+                <page name="proyecto_detalle" string="Detalles proyecto" attrs="{'invisible': [('es_proyecto', '=', False)]}">
+                    <group>
+                        <group>
+                            <field name="plantilla_proyecto_detalle_id"/>
+                        </group>
+                        <group>
+                            <button name="cargar_plantilla_proyecto_detalle"
+                                    string="Cargar plantilla"
+                                    type="object"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="proyecto_detalle_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="coste"/>
+                                <field name="unidades"/>
+                                <field name="total"/>
+                                <field name="coste_real"/>
+                                <field name="precio_unitario"/>
+                                <field name="precio_venta"/>
+                                <field name="margen"/>
+                                <field name="margen_porcentaje"/>
+                                <field name="currency_id" invisible="1"/>
+                                <button name="mostrar_lineas"
+                                        type="object"
+                                        icon="fa-external-link"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group class="oe_right" colspan="2" name="proyecto_detalle_total">
+                        <field name="precio_venta_proyecto_detalle"/>
+                        <field name="coste_total_proyecto_detalle"/>
+                        <field name="beneficio_proyecto_detalle"/>
+                        <field name="margen_proyecto_detalle"/>
+                        <field name="coste_real_proyecto_detalle"/>
+                        <field name="beneficio_real_proyecto_detalle"/>
+                        <field name="margen_real_proyecto_detalle"/>
+                    </group>
+                </page>
             </xpath>
         </field>
     </record>
+
+    <record id="sale_view_order_tree" model="ir.ui.view">
+        <field name="name">sale.order.tree.induus</field>
+        <field name="model">sale.order</field>
+        <field ref="sale.view_order_tree" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-danger">numero_dias_pago!=0 and numero_dias_pago&lt;numero_dias_cobro</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="client_order_ref"/>
+            </xpath>
+
+            <xpath expr="//field[@name='expected_date']" position="before">
+                <field name="effective_date"/>
+            </xpath>
+
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="amount_untaxed" sum="Total Untaxed" widget="monetary"/>
+                <field name="amount_tax" sum="Total Tax" widget="monetary"/>
+            </xpath>
+
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="margen_analitico" widget="monetary" sum="Beneficio analítico"/>
+                <field name="numero_dias_cobro" avg="Días cobro"/>
+                <field name="numero_dias_pago" avg="Días pago"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_view_order_hoja_margenes_tree" model="ir.ui.view">
+        <field name="name">sale.order.hoja.margenes.tree.induus</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="coste"/>
+                <field name="amount_untaxed"/>
+                <field name="amount_tax"/>
+                <field name="amount_total"/>
+                <field name="margin" string="Beneficio"/>
+                <field name="margin_porcentaje"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="state" invisible="1"/>
+                <field name="invoice_status" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sale_view_quotation_tree_with_onboarding" model="ir.ui.view">
+        <field name="name">sale.order.tree.induus</field>
+        <field name="model">sale.order</field>
+        <field ref="sale.view_quotation_tree_with_onboarding" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="client_order_ref"/>
+            </xpath>
+            <xpath expr="//field[@name='commitment_date']" position="after">
+                <field name="activity_date_deadline" string="Seguimiento Presupuesto"/>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="amount_untaxed" sum="Total Untaxed" widget="monetary"/>
+                <field name="amount_tax" sum="Total Tax" widget="monetary"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="margin" string="Beneficio" sum="Total Margin" widget="monetary"/>
+                <field name="numero_dias_cobro" avg="Días cobro"/>
+                <field name="numero_dias_pago" avg="Días pago"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_margin_sale_order" model="ir.ui.view">
+        <field name="name">sale.order.margin.view.form.induus</field>
+        <field name="model">sale.order</field>
+        <field ref="sale_margin.sale_margin_sale_order" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='margin']" position="attributes">
+                <attribute name="string">Beneficio</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter" model="ir.ui.view">
+        <field name="name">sale.order.list.select.induus</field>
+        <field name="model">sale.order</field>
+        <field ref="sale.view_sales_order_filter" name="inherit_id"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']" position="after">
+                <field name="client_order_ref"/>
+                <field name="order_line" string="R. cliente"
+                       filter_domain="[('order_line.referencia_cliente', 'ilike', self)]"/>
+                <field name="equipo_serial"/>
+                <field name="equipo_eme"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_no_automaticos_tree" model="ir.ui.view">
+        <field name="name">sale.order.no_automaticos.tree.induus</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Order Number"/>
+                <field name="client_order_ref"/>
+                <field name="effective_date"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="amount_untaxed" sum="Total Untaxed" widget="monetary"/>
+                <field name="amount_tax" sum="Total Tax" widget="monetary"/>
+                <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+                <field name="margin" sum="Total Margin" widget="monetary"/>
+                <field name="numero_dias_cobro" avg="Días cobro"/>
+                <field name="numero_dias_pago" avg="Días pago"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="invoice_status"/>
+                <field name="state" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="detalle_equipo_tree" model="ir.ui.view">
+        <field name="name">detalle.equipo.tree.induus</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="order_effective_date"/>
+                <field name="equipo_id"/>
+                <field name="equipo_serie"/>
+                <field name="equipo_referencia"/>
+                <field name="equipo_serial"/>
+                <field name="equipo_eme"/>
+                <field name="order_id"/>
+                <field name="referencia_cliente"/>
+                <field name="order_partner_id"/>
+                <field name="product_id"/>
+                <field name="name"/>
+                <field name="price_unit"/>
+                <field name="product_uom_qty"/>
+                <field name="discount"/>
+                <field name="price_subtotal"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="detalle_equipo_search" model="ir.ui.view">
+        <field name="name">detalle.equipo.search.induus</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="equipo_id"/>
+                <field name="equipo_serie"/>
+                <field name="equipo_referencia"/>
+                <field name="equipo_serial"/>
+                <field name="equipo_eme"/>
+                <field name="order_id"/>
+                <field name="referencia_cliente"/>
+                <field name="product_id"/>
+                <field name="name"/>
+                <group expand="0" string="Group By">
+                    <filter string="Equipo" name="equipo_id" context="{'group_by':'equipo_id'}"/>
+                    <filter string="Serie" name="equipo_serie" context="{'group_by':'equipo_serie'}"/>
+                    <filter string="Referencia" name="equipo_referencia" context="{'group_by':'equipo_referencia'}"/>
+                    <filter string="Serial" name="equipo_serial" context="{'group_by':'equipo_serial'}"/>
+                    <filter string="Eme" name="equipo_eme" context="{'group_by':'equipo_eme'}"/>
+                    <filter string="Fecha" name="order_effective_date" context="{'group_by':'order_effective_date'}"/>
+                    <filter string="Pedido" name="order_id" context="{'group_by':'order_id'}"/>
+                    <filter string="Referencia cliente" name="referencia_cliente" context="{'group_by':'referencia_cliente'}"/>
+                    <filter string="Producto" name="product_id" context="{'group_by':'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sale_order_lost_reason_action" >
+        <field name="name">Motivo de cancelación</field>
+        <field name="res_model">sale.order.lost.reason</field>
+    </record>
+
+    <record id="producto_proveedores_action" model="ir.actions.act_window">
+        <field name="name">Productos/Proveedores</field>
+        <field name="res_model">product.supplierinfo</field>
+    </record>
+
+    <record id="action_fecha_festivo" model="ir.actions.act_window">
+        <field name="name">Días festivos</field>
+        <field name="res_model">induus.fecha_festivo</field>
+    </record>
+
+    <record id="action_sale_order_hoja_margenes_tree" model="ir.actions.act_window">
+        <field name="name">Pedidos pendientes</field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[
+            ('state', 'not in', ('draft', 'sent', 'cancel')), ('invoice_status', '!=', 'invoiced')]</field>
+        <field name="view_id" ref="sale_view_order_hoja_margenes_tree"/>
+    </record>
+
+    <menuitem id="menu_sale_order_lost_reason"
+              action="sale_order_lost_reason_action"
+              parent="sale.menu_sale_config"
+              sequence="50"/>
+
+    <menuitem id="sale.sale_order_menu"
+              parent="sale.menu_sale_report"
+              sequence="50"/>
+
+    <menuitem id="sale.menu_sale_order"
+              name="Pedidos"
+              action="sale.action_orders"
+              parent="sale.sale_menu_root"
+              sequence="1"
+              groups="sales_team.group_sale_salesman"/>
+
+    <menuitem id="menu_sale_order_hoja_margenes"
+              name="Pedidos pendientes"
+              action="action_sale_order_hoja_margenes_tree"
+              parent="sale.sale_menu_root"
+              sequence="2"
+              groups="sales_team.group_sale_salesman"/>
+
+    <menuitem id="sale.menu_sale_quotations"
+              name="Presupuestos"
+              action="sale.action_quotations_with_onboarding"
+              parent="sale.sale_menu_root"
+              sequence="0"
+              groups="sales_team.group_sale_salesman"/>
+
+<!--     <menuitem id="producto_proveedores_menu"
+              name="Productos/Proveedores"
+              action="producto_proveedores_action"
+              parent="website_sale.menu_catalog"
+              sequence="3"/> -->
+
+    <menuitem action="action_fecha_festivo"
+              id="menu_fecha_festivo"
+              parent="sale.menu_sales_config"
+              sequence="5"/>
 </odoo>

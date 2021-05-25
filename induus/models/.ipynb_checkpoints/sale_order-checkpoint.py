@@ -259,8 +259,8 @@ class SaleOrder(models.Model):
             for r in self.filtered(lambda so: so.analytic_account_id):
                 r.analytic_account_id.write({'partner_id' : r.partner_id.id})
 
-        if not self.env.context.get('no_get_delivery_price'):
-            self.filtered(lambda o: o.carrier_id and o.state in ['draft', 'sent']).get_delivery_price()
+#         if not self.env.context.get('no_get_delivery_price'):
+#             self.filtered(lambda o: o.carrier_id and o.state in ['draft', 'sent']).get_delivery_price()
 
         if 'state' in vals:
             for r in self.filtered(lambda o: o.anadir_suscripcion and o.partner_id.email):

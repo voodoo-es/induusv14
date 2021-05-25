@@ -61,7 +61,7 @@ class Partner(models.Model):
     @api.onchange('company_type')
     def _onchange_property_account_position_id(self):
         for r in self:
-            if r.customer or r.supplier:
+            if r.partner_share or r.is_company:
                 r.property_account_position_id = False
             elif r.company_type == 'company' and not r.property_account_position_id:
                 regimen_nacional = self.env.ref('l10n_es.fp_nacional', False)
@@ -74,10 +74,10 @@ class Partner(models.Model):
             if r.parent_id:
                 r.zona_id = r.parent_id.zona_id.id if r.parent_id.zona_id else None
 
-    @api.onchange('supplier')
+    @api.onchange('is_company')
     def _onchange_supplier(self):
         for r in self:
-            if r.supplier:
+            if r.is_company:
                 r.seguimiento = True
             else:
                 r.seguimiento = False
@@ -187,16 +187,16 @@ class Partner(models.Model):
 
             if r.is_company:
                 validar_campos_contacto(r, CAMPOS_OBLIGATORIOS_EMPRESA)
-                if r.customer:
+                if r.partner_share:
                     validar_campos_contacto(r, CAMPOS_OBLIGATORIOS_EMPRESA_CLIENTE)
 
-                if r.supplier:
+                if r.is_company:
                     validar_campos_contacto(r, CAMPOS_OBLIGATORIOS_EMPRESA_PROVEEDOR)
 
-            if r.customer:
+            if r.partner_share:
                 validar_campos_contacto(r, CAMPOS_OBLIGATORIOS_CLIENTE)
 
-            if r.supplier:
+            if r.is_company:
                 validar_campos_contacto(r, CAMPOS_OBLIGATORIOS_PROVEEDOR)
 
 #     @api.multi

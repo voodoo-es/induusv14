@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="label_product_product_view" inherit_id="stock_zebra.label_product_product_view">
+    <template id="label_product_product_view" inherit_id="stock.label_transfer_template_view_zpl">
         <xpath expr="//t[@t-translation='off'][1]" position="replace">
             <t t-translation="off">
 ^XA
